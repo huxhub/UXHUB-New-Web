@@ -130,12 +130,28 @@ button {
   text-decoration: none;
   color: #000000;
   user-select: none;
-  transition: color 0.3s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.brand-logo:hover {
+  opacity: 0.8;
+}
+
+.brand-logo-img {
+  height: clamp(30px, 3vw, 38px);
+  width: auto;
+  display: block;
+  object-fit: contain;
 }
 
 .brand-logo--dark,
 .site-header--dark .brand-logo {
   color: #ffffff;
+}
+
+.brand-logo--dark .brand-logo-img,
+.site-header--dark .brand-logo-img {
+  filter: brightness(0) invert(1);
 }
 
 .logo-ux {

@@ -11,15 +11,19 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Effects from './components/Effects';
 import ScrollTypographyReveal from './components/ScrollTypographyReveal';
+import uxhubLogo from './assets/Group 1 (1).svg';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── UXHUB Logo ─────────────────────────────────────────────────────────────
-const UXHubLogo = ({ dark = false }) => (
-  <a href="/" className={`brand-logo${dark ? ' brand-logo--dark' : ''}`} aria-label="UXHUB Homepage">
-    <span className="logo-ux">UX</span>
-    <span className="logo-hub-vertical">HUB</span>
+// ─── UXHUB Logo (from assets) ─────────────────────────────────────────────
+const UXHubLogo = ({ dark = false, className = '' }) => (
+  <a href="/" className={`brand-logo${dark ? ' brand-logo--dark' : ''} ${className}`} aria-label="UXHUB Homepage">
+    <img 
+      src={uxhubLogo} 
+      alt="UXHUB" 
+      className="brand-logo-img" 
+    />
   </a>
 );
 
