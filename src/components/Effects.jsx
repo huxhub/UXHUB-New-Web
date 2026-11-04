@@ -58,8 +58,7 @@ export default function Effects({ kind, className }) {
             }
 
             // Sticky hero ribbons: pinned in place with zero movement on scroll
-            const HERO_TOP_OFFSET = -5;
-            canvas.style.transform = `translate3d(0, ${HERO_TOP_OFFSET}px, 0)`;
+            canvas.style.transform = 'translate3d(0, 0, 0)';
 
           } else {
             // Swirl background renderer for Philosophy section
