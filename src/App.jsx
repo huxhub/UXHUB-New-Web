@@ -411,13 +411,6 @@ export default function App() {
   const [storyIndex, setStoryIndex] = useState(0);
 
   const { scrollYProgress } = useScroll();
-  const heroRef = useRef(null);
-  const { scrollYProgress: heroScrollProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-  const heroContentOpacity = useTransform(heroScrollProgress, [0, 0.6, 0.92], [1, 0.85, 0]);
-  const heroContentY = useTransform(heroScrollProgress, [0, 0.92], [0, -20]);
 
   // Initialize Lenis smooth scroll with luxurious inertia physics
   useEffect(() => {
@@ -477,10 +470,58 @@ export default function App() {
       { threshold: 0.08 }
     );
 
+    // Kinetic Letter-by-Letter Scroll Dissolve for Hero
+    const heroLettersCtx = gsap.context(() => {
+      const titleChars = document.querySelectorAll('.hero-title-char');
+      const subheadChars = document.querySelectorAll('.hero-subhead-char');
+      const descChars = document.querySelectorAll('.hero-desc-char');
+
+      if (!titleChars.length) return;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: '+=420',
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+        }
+      });
+
+      // 1. One by one letters in "Build. Launch. Grow." fade out
+      tl.to(titleChars, {
+        opacity: 0,
+        y: -10,
+        stagger: 0.02,
+        ease: 'power1.out',
+      }, 0);
+
+      // 2. One by one letters in subtitle fade out
+      if (subheadChars.length) {
+        tl.to(subheadChars, {
+          opacity: 0,
+          y: -8,
+          stagger: 0.012,
+          ease: 'power1.out',
+        }, 0.15);
+      }
+
+      // 3. One by one letters in bottom paragraph fade out
+      if (descChars.length) {
+        tl.to(descChars, {
+          opacity: 0,
+          y: -6,
+          stagger: 0.005,
+          ease: 'power1.out',
+        }, 0.25);
+      }
+    });
+
     const revealElements = document.querySelectorAll('.observe-reveal');
     revealElements.forEach((el) => observer.observe(el));
 
     return () => {
+      heroLettersCtx.revert();
       lenis.off('scroll', ScrollTrigger.update);
       gsap.ticker.remove(updateTicker);
       document.removeEventListener('click', handleAnchorClick);
@@ -524,7 +565,7 @@ export default function App() {
           SECTION 1: HERO (LIGHT)
           With Liquid Chrome Ribbon Parallax Animation on scroll
       ══════════════════════════════════════════════════════════════════════ */}
-      <section id="hero" ref={heroRef} className="hero-section">
+      <section id="hero" className="hero-section">
         {/* ─── Header (Sticky within Hero section, completely transparent, no blur) ─ */}
         <header className="site-header">
           <div className="header-inner">
@@ -543,45 +584,53 @@ export default function App() {
           <Effects kind="hero" className="hero-liquid-canvas" />
         </div>
 
-        <motion.div 
-          className="hero-foreground-content"
-          style={{ opacity: heroContentOpacity, y: heroContentY }}
-        >
-          <div className="hero-top-copy">
+        <div className="hero-foreground-content">
+          <motion.div 
+            className="hero-top-copy"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          >
             <h1 className="hero-display-title">
-              {['Build.', 'Launch.', 'Grow.'].map((word, i) => (
-                <motion.span 
-                  key={word}
-                  className="hero-word-reveal" 
-                  initial={{ opacity: 0, y: 25 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.15 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  {word}{i < 2 ? '\u00A0' : ''}
-                </motion.span>
+              {['Build.', 'Launch.', 'Grow.'].map((word, wIdx, arr) => (
+                <span key={wIdx} className="hero-word">
+                  {word.split('').map((char, cIdx) => (
+                    <span key={cIdx} className="hero-char hero-title-char">{char}</span>
+                  ))}
+                  {wIdx < arr.length - 1 ? <span className="hero-char-space">&nbsp;</span> : null}
+                </span>
               ))}
             </h1>
-            <motion.h2 
-              className="hero-subhead"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            >
-              Turning digital opportunities into scalable businesses.
-            </motion.h2>
-          </div>
+            <h2 className="hero-subhead">
+              {"Turning digital opportunities into scalable businesses.".split(' ').map((word, wIdx, arr) => (
+                <span key={wIdx} className="hero-subhead-word">
+                  {word.split('').map((char, cIdx) => (
+                    <span key={cIdx} className="hero-char hero-subhead-char">{char}</span>
+                  ))}
+                  {wIdx < arr.length - 1 ? ' ' : ''}
+                </span>
+              ))}
+            </h2>
+          </motion.div>
 
-          <div className="hero-bottom-copy">
-            <motion.p 
-              className="hero-desc"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              We help businesses across India and KSA build digital products, launch e-commerce businesses, create high-performing digital experiences and develop the growth engines needed to scale.
-            </motion.p>
-          </div>
-        </motion.div>
+          <motion.div 
+            className="hero-bottom-copy"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <p className="hero-desc">
+              {"We help businesses across India and KSA build digital products, launch e-commerce businesses, create high-performing digital experiences and develop the growth engines needed to scale.".split(' ').map((word, wIdx, arr) => (
+                <span key={wIdx} className="hero-desc-word">
+                  {word.split('').map((char, cIdx) => (
+                    <span key={cIdx} className="hero-char hero-desc-char">{char}</span>
+                  ))}
+                  {wIdx < arr.length - 1 ? ' ' : ''}
+                </span>
+              ))}
+            </p>
+          </motion.div>
+        </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════

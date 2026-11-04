@@ -411,8 +411,24 @@ button {
   white-space: nowrap;
 }
 
-.hero-word-reveal {
+.hero-word {
   display: inline-block;
+  white-space: nowrap;
+}
+
+.hero-char {
+  display: inline-block;
+  will-change: opacity, transform;
+}
+
+.hero-char-space {
+  display: inline-block;
+}
+
+.hero-subhead-word,
+.hero-desc-word {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .hero-subhead {
