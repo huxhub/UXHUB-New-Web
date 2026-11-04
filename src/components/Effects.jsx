@@ -57,19 +57,9 @@ export default function Effects({ kind, className }) {
               cleanups.push(() => clearTimeout(stop));
             }
 
-            // Scroll parallax for hero ribbons (fine-tuned position)
+            // Sticky hero ribbons: pinned in place with zero movement on scroll
             const HERO_TOP_OFFSET = -5;
             canvas.style.transform = `translate3d(0, ${HERO_TOP_OFFSET}px, 0)`;
-
-            const onHeroScroll = () => {
-              if (!canvas || disposed) return;
-              const y = window.scrollY;
-              if (y < window.innerHeight * 1.5) {
-                canvas.style.transform = `translate3d(0, ${HERO_TOP_OFFSET + y * 0.18}px, 0)`;
-              }
-            };
-            window.addEventListener("scroll", onHeroScroll, { passive: true });
-            cleanups.push(() => window.removeEventListener("scroll", onHeroScroll));
 
           } else {
             // Swirl background renderer for Philosophy section
