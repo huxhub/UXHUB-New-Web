@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { 
   ArrowRight, 
   X, 
@@ -411,6 +411,13 @@ export default function App() {
   const [storyIndex, setStoryIndex] = useState(0);
 
   const { scrollYProgress } = useScroll();
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroScrollProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+  const heroContentOpacity = useTransform(heroScrollProgress, [0, 0.3], [1, 0]);
+  const heroContentY = useTransform(heroScrollProgress, [0, 0.3], [0, -35]);
 
   // Initialize Lenis smooth scroll with luxurious inertia physics
   useEffect(() => {
@@ -517,7 +524,7 @@ export default function App() {
           SECTION 1: HERO (LIGHT)
           With Liquid Chrome Ribbon Parallax Animation on scroll
       ══════════════════════════════════════════════════════════════════════ */}
-      <section id="hero" className="hero-section">
+      <section id="hero" ref={heroRef} className="hero-section">
         {/* ─── Header (Sticky within Hero section, completely transparent, no blur) ─ */}
         <header className="site-header">
           <div className="header-inner">
@@ -536,7 +543,10 @@ export default function App() {
           <Effects kind="hero" className="hero-liquid-canvas" />
         </div>
 
-        <div className="hero-foreground-content">
+        <motion.div 
+          className="hero-foreground-content"
+          style={{ opacity: heroContentOpacity, y: heroContentY }}
+        >
           <div className="hero-main-copy">
             <h1 className="hero-display-title">
               {['Build.', 'Launch.', 'Grow.'].map((word, i) => (
@@ -568,7 +578,7 @@ export default function App() {
               We help businesses across India and KSA build digital products, launch e-commerce businesses, create high-performing digital experiences and develop the growth engines needed to scale.
             </motion.p>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════

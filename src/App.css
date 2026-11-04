@@ -427,7 +427,7 @@ button {
   font-size: clamp(0.92rem, 1.05vw, 0.98rem);
   color: #52525b;
   line-height: 1.65;
-  max-width: 540px;
+  max-width: 460px;
 }
 
 .hero-cta-wrap {
