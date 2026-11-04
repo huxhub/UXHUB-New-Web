@@ -547,7 +547,7 @@ export default function App() {
           className="hero-foreground-content"
           style={{ opacity: heroContentOpacity, y: heroContentY }}
         >
-          <div className="hero-main-copy">
+          <div className="hero-top-copy">
             <h1 className="hero-display-title">
               {['Build.', 'Launch.', 'Grow.'].map((word, i) => (
                 <motion.span 
@@ -569,6 +569,9 @@ export default function App() {
             >
               Turning digital opportunities into scalable businesses.
             </motion.h2>
+          </div>
+
+          <div className="hero-bottom-copy">
             <motion.p 
               className="hero-desc"
               initial={{ opacity: 0, y: 15 }}
