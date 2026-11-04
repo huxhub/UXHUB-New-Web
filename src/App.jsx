@@ -607,7 +607,7 @@ export default function App() {
                   {word.split('').map((char, cIdx) => (
                     <span key={cIdx} className="hero-char hero-subhead-char">{char}</span>
                   ))}
-                  {wIdx < arr.length - 1 ? ' ' : ''}
+                  {wIdx < arr.length - 1 ? <span className="hero-char-space">&nbsp;</span> : null}
                 </span>
               ))}
             </h2>
@@ -625,7 +625,7 @@ export default function App() {
                   {word.split('').map((char, cIdx) => (
                     <span key={cIdx} className="hero-char hero-desc-char">{char}</span>
                   ))}
-                  {wIdx < arr.length - 1 ? ' ' : ''}
+                  {wIdx < arr.length - 1 ? <span className="hero-char-space">&nbsp;</span> : null}
                 </span>
               ))}
             </p>
