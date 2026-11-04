@@ -445,6 +445,7 @@ button {
   margin-top: auto;
   margin-bottom: clamp(1.8rem, 6vh, 3.2rem);
   max-width: min(520px, 62ch);
+  margin-left: -1.25rem;
 }
 
 .hero-desc {
@@ -1633,6 +1634,7 @@ button {
   .hero-bottom-copy {
     margin-bottom: 2rem;
     max-width: 100%;
+    margin-left: 0;
   }
   .hero-cta-wrap {
     margin-top: 3rem;
