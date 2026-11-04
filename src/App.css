@@ -206,7 +206,7 @@ button {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 2.2rem 3.5rem;
+  padding: 2.2rem clamp(2.5rem, 4.5vw, 4rem);
   pointer-events: auto;
 }
 
@@ -385,29 +385,29 @@ button {
   z-index: 10;
   width: 100%;
   max-width: 1440px;
+  height: 100vh;
+  height: 100svh;
   min-height: 100vh;
-  min-height: 100svh;
   margin: 0 auto;
-  padding: 0 3.5rem;
+  padding: 0 clamp(2.5rem, 4.5vw, 4rem);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex: 1;
 }
 
 .hero-top-copy {
-  margin-top: clamp(6.8rem, 14vh, 9.8rem);
-  max-width: 720px;
+  margin-top: clamp(8rem, 27vh, 14rem);
+  max-width: 760px;
 }
 
 .hero-display-title {
   font-family: var(--font-display);
-  font-size: clamp(2.55rem, 4.3vw, 4.1rem);
+  font-size: clamp(2.65rem, 4.5vw, 4.25rem);
   font-weight: 350;
   line-height: 1.05;
   letter-spacing: -0.035em;
   color: #000000;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.95rem;
   white-space: nowrap;
 }
 
@@ -417,9 +417,9 @@ button {
 
 .hero-subhead {
   font-family: var(--font-display);
-  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  font-size: clamp(1rem, 1.22vw, 1.2rem);
   font-weight: 400;
-  color: #27272a;
+  color: #18181b;
   letter-spacing: -0.015em;
   line-height: 1.4;
   margin: 0;
@@ -427,15 +427,15 @@ button {
 
 .hero-bottom-copy {
   margin-top: auto;
-  margin-bottom: clamp(2.5rem, 5.5vh, 4rem);
-  max-width: 380px;
+  margin-bottom: clamp(2rem, 7.5vh, 4.2rem);
+  max-width: 330px;
 }
 
 .hero-desc {
   font-family: var(--font-body);
-  font-size: clamp(0.82rem, 0.95vw, 0.88rem);
+  font-size: clamp(0.78rem, 0.88vw, 0.85rem);
   color: #52525b;
-  line-height: 1.62;
+  line-height: 1.58;
   letter-spacing: -0.01em;
   margin: 0;
 }

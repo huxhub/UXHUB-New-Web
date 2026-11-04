@@ -557,7 +557,7 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.15 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  {word}
+                  {word}{i < 2 ? '\u00A0' : ''}
                 </motion.span>
               ))}
             </h1>
