@@ -416,8 +416,8 @@ export default function App() {
     target: heroRef,
     offset: ["start start", "end start"]
   });
-  const heroContentOpacity = useTransform(heroScrollProgress, [0, 0.3], [1, 0]);
-  const heroContentY = useTransform(heroScrollProgress, [0, 0.3], [0, -35]);
+  const heroContentOpacity = useTransform(heroScrollProgress, [0, 0.6, 0.92], [1, 0.85, 0]);
+  const heroContentY = useTransform(heroScrollProgress, [0, 0.92], [0, -20]);
 
   // Initialize Lenis smooth scroll with luxurious inertia physics
   useEffect(() => {
