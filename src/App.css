@@ -396,7 +396,7 @@ button {
 }
 
 .hero-top-copy {
-  margin-top: clamp(8rem, 27vh, 14rem);
+  margin-top: clamp(6.2rem, 20.5vh, 10.5rem);
   max-width: 760px;
 }
 
