@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, 
   X, 
@@ -410,8 +410,6 @@ export default function App() {
   const [partnerIndex, setPartnerIndex] = useState(0);
   const [storyIndex, setStoryIndex] = useState(0);
 
-  const { scrollYProgress } = useScroll();
-
   // Initialize Lenis smooth scroll with luxurious inertia physics
   useEffect(() => {
     const lenis = new Lenis({
@@ -544,12 +542,6 @@ export default function App() {
 
   return (
     <div className="app-root">
-      {/* ─── Premium Scroll Progress Indicator ───────────────────────────── */}
-      <motion.div 
-        className="scroll-progress-bar" 
-        style={{ scaleX: scrollYProgress }} 
-      />
-
       {/* ─── Overlays ────────────────────────────────────────────────────── */}
       <MenuDrawer 
         isOpen={menuOpen} 

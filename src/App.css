@@ -51,20 +51,6 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* ─── Premium Scroll Progress Bar ─────────────────────────────────────────── */
-.scroll-progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2.5px;
-  background: linear-gradient(90deg, #ff7723 0%, #ff5200 100%);
-  z-index: 99999;
-  transform-origin: 0%;
-  pointer-events: none;
-  box-shadow: 0 0 12px rgba(255, 119, 35, 0.6);
-}
-
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-light);
