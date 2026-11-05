@@ -1605,17 +1605,28 @@ button {
   .header-inner {
     padding: 1.6rem 2rem;
   }
+  .hero-liquid-container {
+    top: 13%;
+    height: 74%;
+  }
+  .hero-liquid-canvas {
+    height: 100% !important;
+    top: 0 !important;
+    transform: none !important;
+  }
   .hero-foreground-content {
     padding: 0 2rem;
   }
   .hero-top-copy {
-    margin-top: clamp(5.5rem, 18vh, 8rem);
+    margin-top: clamp(5rem, 13vh, 6.5rem);
   }
   .hero-display-title {
     font-size: clamp(2.4rem, 5.2vw, 3.5rem);
     white-space: normal;
   }
   .hero-bottom-copy {
+    margin-top: auto;
+    margin-bottom: clamp(1.75rem, 4vh, 2.5rem);
     margin-left: 0;
     max-width: 480px;
   }
@@ -1731,7 +1742,7 @@ button {
     padding: 0 1.5rem;
   }
   .header-inner {
-    padding: 1.5rem 1.5rem 1rem;
+    padding: 1.35rem 1.5rem 0.5rem;
   }
   .brand-logo-img {
     height: 28px;
@@ -1740,36 +1751,41 @@ button {
     min-height: 100svh;
     height: 100svh;
   }
+  .hero-liquid-container {
+    top: 17%;
+    height: 65%;
+  }
   .hero-liquid-canvas {
     height: 100% !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
+    top: 0 !important;
+    transform: none !important;
   }
   .hero-foreground-content {
     padding: 0 1.5rem;
   }
   .hero-top-copy {
-    margin-top: clamp(5.75rem, 16vh, 7rem);
+    margin-top: clamp(4.5rem, 11vh, 5.5rem);
   }
   .hero-display-title {
-    font-size: clamp(2.1rem, 7.5vw, 2.85rem);
-    line-height: 1.12;
-    margin-bottom: 0.85rem;
+    font-size: clamp(2rem, 7.5vw, 2.7rem);
+    line-height: 1.1;
+    margin-bottom: 0.65rem;
   }
   .hero-subhead {
-    font-size: clamp(0.95rem, 3.6vw, 1.08rem);
-    line-height: 1.48;
-    max-width: 340px;
+    font-size: clamp(0.92rem, 3.5vw, 1.02rem);
+    line-height: 1.45;
+    max-width: 330px;
   }
   .hero-bottom-copy {
-    margin-bottom: clamp(1.75rem, 4.5vh, 2.5rem);
+    margin-top: auto;
+    margin-bottom: clamp(1.25rem, 3.5vh, 1.85rem);
     max-width: 100%;
     margin-left: 0;
   }
   .hero-desc {
-    font-size: clamp(0.82rem, 3.4vw, 0.88rem);
-    line-height: 1.62;
-    max-width: 380px;
+    font-size: clamp(0.78rem, 3.4vw, 0.84rem);
+    line-height: 1.55;
+    max-width: 340px;
   }
 
   /* Section 2: Statement */
@@ -1984,38 +2000,50 @@ button {
     padding: 0 1.25rem;
   }
   .header-inner {
-    padding: 1.4rem 1.25rem 0.75rem;
+    padding: 1.25rem 1.25rem 0.5rem;
   }
   .brand-logo-img {
-    height: 26px;
+    height: 25px;
   }
   .menu-button {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     padding: 0.4rem;
+  }
+  .hero-liquid-container {
+    top: 18%;
+    height: 63%;
+  }
+  .hero-liquid-canvas {
+    height: 100% !important;
+    top: 0 !important;
+    transform: none !important;
   }
   .hero-foreground-content {
     padding: 0 1.25rem;
   }
   .hero-top-copy {
-    margin-top: 5.25rem;
+    margin-top: 4.5rem;
   }
   .hero-display-title {
-    font-size: clamp(1.95rem, 8.5vw, 2.45rem);
-    line-height: 1.12;
-    margin-bottom: 0.75rem;
+    font-size: clamp(1.85rem, 8vw, 2.3rem);
+    line-height: 1.1;
+    margin-bottom: 0.55rem;
   }
   .hero-subhead {
-    font-size: 0.95rem;
-    line-height: 1.48;
-    max-width: 300px;
+    font-size: 0.9rem;
+    line-height: 1.42;
+    max-width: 290px;
   }
   .hero-bottom-copy {
-    margin-bottom: 1.65rem;
+    margin-top: auto;
+    margin-bottom: 1.25rem;
+    max-width: 100%;
+    margin-left: 0;
   }
   .hero-desc {
-    font-size: 0.82rem;
-    line-height: 1.6;
-    max-width: 340px;
+    font-size: 0.78rem;
+    line-height: 1.52;
+    max-width: 320px;
   }
 
   /* Section 2: Statement */
