@@ -659,13 +659,13 @@ export default function App() {
               tag="p"
               className="statement-desc"
               theme="dark"
-              fromColor="#3A3A3A"
-              toColor="#A1A1AA"
-              fromOpacity={0.3}
-              toOpacity={0.95}
+              fromColor="#71717A"
+              toColor="#D4D4D8"
+              fromOpacity={0.4}
+              toOpacity={1}
               stagger={0.035}
-              start="top 80%"
-              end="bottom 40%"
+              start="top 90%"
+              end="bottom 50%"
               scrub={0.8}
             />
           </div>
