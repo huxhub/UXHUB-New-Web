@@ -1620,7 +1620,7 @@ button {
     padding: 0 2rem;
   }
   .hero-top-copy {
-    margin-top: clamp(6rem, 15vh, 7.5rem);
+    margin-top: clamp(7.25rem, 18vh, 9rem);
   }
   .hero-display-title {
     font-size: clamp(2.4rem, 5.2vw, 3.5rem);
@@ -1768,7 +1768,7 @@ button {
     padding: 0 1.5rem;
   }
   .hero-top-copy {
-    margin-top: clamp(5.5rem, 13.5vh, 6.75rem);
+    margin-top: clamp(6.75rem, 17vh, 8.25rem);
   }
   .hero-display-title {
     font-size: clamp(2rem, 7.5vw, 2.7rem);
@@ -2028,7 +2028,7 @@ button {
     padding: 0 1.25rem;
   }
   .hero-top-copy {
-    margin-top: clamp(5.25rem, 12.5vh, 6rem);
+    margin-top: clamp(6.25rem, 15.5vh, 7.5rem);
     max-width: 280px;
   }
   .hero-display-title {
