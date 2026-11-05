@@ -1731,7 +1731,7 @@ button {
     padding: 0 1.5rem;
   }
   .header-inner {
-    padding: 1.35rem 1.5rem;
+    padding: 1.5rem 1.5rem 1rem;
   }
   .brand-logo-img {
     height: 28px;
@@ -1740,29 +1740,36 @@ button {
     min-height: 100svh;
     height: 100svh;
   }
+  .hero-liquid-canvas {
+    height: 100% !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
   .hero-foreground-content {
     padding: 0 1.5rem;
   }
   .hero-top-copy {
-    margin-top: clamp(4.5rem, 15vh, 6rem);
+    margin-top: clamp(5.75rem, 16vh, 7rem);
   }
   .hero-display-title {
     font-size: clamp(2.1rem, 7.5vw, 2.85rem);
-    line-height: 1.1;
-    margin-bottom: 0.75rem;
+    line-height: 1.12;
+    margin-bottom: 0.85rem;
   }
   .hero-subhead {
-    font-size: clamp(0.92rem, 3.6vw, 1.05rem);
-    line-height: 1.45;
+    font-size: clamp(0.95rem, 3.6vw, 1.08rem);
+    line-height: 1.48;
+    max-width: 340px;
   }
   .hero-bottom-copy {
-    margin-bottom: clamp(1.25rem, 4vh, 2rem);
+    margin-bottom: clamp(1.75rem, 4.5vh, 2.5rem);
     max-width: 100%;
     margin-left: 0;
   }
   .hero-desc {
-    font-size: clamp(0.78rem, 3.4vw, 0.85rem);
-    line-height: 1.58;
+    font-size: clamp(0.82rem, 3.4vw, 0.88rem);
+    line-height: 1.62;
+    max-width: 380px;
   }
 
   /* Section 2: Statement */
@@ -1977,36 +1984,38 @@ button {
     padding: 0 1.25rem;
   }
   .header-inner {
-    padding: 1.15rem 1.25rem;
+    padding: 1.4rem 1.25rem 0.75rem;
   }
   .brand-logo-img {
-    height: 25px;
+    height: 26px;
   }
   .menu-button {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     padding: 0.4rem;
   }
   .hero-foreground-content {
     padding: 0 1.25rem;
   }
   .hero-top-copy {
-    margin-top: 4.25rem;
+    margin-top: 5.25rem;
   }
   .hero-display-title {
-    font-size: clamp(1.85rem, 8.5vw, 2.35rem);
-    line-height: 1.08;
-    margin-bottom: 0.65rem;
+    font-size: clamp(1.95rem, 8.5vw, 2.45rem);
+    line-height: 1.12;
+    margin-bottom: 0.75rem;
   }
   .hero-subhead {
-    font-size: 0.92rem;
-    line-height: 1.45;
+    font-size: 0.95rem;
+    line-height: 1.48;
+    max-width: 300px;
   }
   .hero-bottom-copy {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.65rem;
   }
   .hero-desc {
-    font-size: 0.78rem;
-    line-height: 1.55;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    max-width: 340px;
   }
 
   /* Section 2: Statement */
