@@ -5062,18 +5062,473 @@ html:has(.page-capabilities) { scroll-behavior: smooth; }
 .page-capabilities .cap-cta-button { color: #fff; }
 .page-capabilities .cap-cta-button { border-bottom-color: rgba(255,255,255,.5); }
 .page-capabilities .cap-cta-button:hover { color: #ff7723; border-bottom-color: #ff7723; }
-@media (max-width: 1024px) {
-  .cap-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 1.5rem !important; }
-  .cap-card { min-height: 340px; }
+/* ══════════════════════════════════════════════════════════════════════════
+   COMPREHENSIVE RESPONSIVE SUITE FOR ALL INNER PAGES (MATCHING HOME PAGE)
+   Covers Capabilities, Services, Stories, Contact & Cross-Nav Ecosystem
+══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Global Inner Pages Safety & Fluidity ─────────────────────────────── */
+.inner-page {
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
-@media (max-width: 680px) {
-  .cap-hero { padding-top: 6.5rem; }
-  .cap-hero h1 { font-size: clamp(3.1rem, 15vw, 5rem); }
-  .cap-hero::after { right: -48vw; top: 34%; }
-  .cap-section-heading { display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .cap-section-heading h2 { max-width: 350px; text-align: center; }
-  .cap-grid { grid-template-columns: 1fr !important; gap: 1.25rem !important; }
-  .cap-card { min-height: auto !important; padding: 2.2rem 1.6rem 1.8rem !important; }
-  .cap-standards-inner { grid-template-columns: 1fr; gap: 2rem; }
-  .cap-cta-inner { align-items: flex-start; flex-direction: column; }
+
+/* ─── 1. Desktop / Laptop (max-width: 1200px) ───────────────────────────── */
+@media (max-width: 1200px) {
+  .cap-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.5rem !important;
+  }
+  .cap-card {
+    min-height: 340px;
+  }
+  .story-selector-tabs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* ─── 2. Tablet Landscape & Medium Devices (max-width: 1024px) ──────────── */
+@media (max-width: 1024px) {
+  /* Capabilities Page */
+  .cap-standards-inner {
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+  }
+  .cap-standards::after {
+    display: none;
+  }
+
+  /* Services Page */
+  .services-cards-grid-5 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .services-cards-grid-5 > :last-child {
+    grid-column: 1 / -1;
+    max-width: 580px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .services-division-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Stories Page */
+  .case-study-showcase-box {
+    padding: clamp(2rem, 4vw, 3rem);
+  }
+  .case-study-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .case-study-body-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Contact Page */
+  .contact-bento-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .studios-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* Cross Navigation */
+  .cross-nav-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* ─── 3. Tablet Portrait & Mobile Landscape (max-width: 768px) ──────────── */
+@media (max-width: 768px) {
+  /* Universal Inner Hero */
+  .inner-hero-section {
+    padding: clamp(6rem, 14vh, 7.5rem) 0 clamp(2.5rem, 5vh, 3.5rem);
+  }
+  .inner-hero-title {
+    font-size: clamp(2rem, 7.5vw, 2.75rem);
+    line-height: 1.12;
+    margin-bottom: 1rem;
+  }
+  .inner-hero-desc {
+    font-size: clamp(0.92rem, 3.5vw, 1.05rem);
+    line-height: 1.6;
+    max-width: 100%;
+  }
+
+  /* Capabilities Page */
+  .cap-hero {
+    padding-top: clamp(6.25rem, 14vh, 7.5rem);
+    padding-bottom: clamp(3rem, 6vh, 4rem);
+  }
+  .cap-hero h1 {
+    font-size: clamp(2.2rem, 8vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    margin: 1.5rem 0 1rem;
+  }
+  .cap-hero-copy > p {
+    font-size: clamp(0.95rem, 3.5vw, 1.08rem);
+    line-height: 1.6;
+  }
+  .cap-hero-index {
+    margin-top: clamp(2.5rem, 6vh, 4rem);
+    font-size: 0.65rem;
+  }
+  .cap-disciplines {
+    padding: clamp(3rem, 6vh, 4.5rem) 0;
+  }
+  .cap-section-heading {
+    margin-bottom: clamp(2.5rem, 5vh, 3.5rem);
+  }
+  .cap-section-heading h2 {
+    font-size: clamp(1.85rem, 6.5vw, 2.6rem);
+    line-height: 1.15;
+    max-width: 100%;
+  }
+  .cap-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+  .cap-card {
+    min-height: auto !important;
+    padding: 2.2rem 1.6rem 2rem !important;
+  }
+  .cap-standards {
+    padding: clamp(4rem, 8vh, 5.5rem) 0;
+  }
+  .cap-standards h2 {
+    font-size: clamp(1.85rem, 6.5vw, 2.5rem);
+  }
+  .cap-standards-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .cap-cta {
+    padding: clamp(3.5rem, 7vh, 5rem) 0;
+  }
+  .cap-cta-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.75rem;
+  }
+  .cap-cta h2 {
+    font-size: clamp(1.85rem, 6.5vw, 2.5rem);
+  }
+
+  /* Services Page */
+  .services-hero-black {
+    min-height: auto;
+  }
+  .services-hero-container {
+    min-height: auto;
+    padding-top: clamp(6.25rem, 14vh, 7.5rem);
+    padding-bottom: clamp(4rem, 8vh, 5.5rem);
+  }
+  .services-hero-black-content {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .services-hero-black-title {
+    font-size: clamp(2rem, 7.5vw, 2.6rem);
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+  .services-hero-black-sub {
+    font-size: clamp(0.95rem, 3.4vw, 1.05rem);
+    line-height: 1.5;
+  }
+  .services-showcase-section {
+    padding: clamp(3.5rem, 7vh, 5rem) 0;
+  }
+  .services-editorial-statements {
+    margin-bottom: 2.5rem;
+  }
+  .statement-p1, .statement-p2 {
+    font-size: clamp(1rem, 3.4vw, 1.12rem);
+    line-height: 1.65;
+  }
+  .services-media-placeholder {
+    aspect-ratio: 16 / 10;
+    border-radius: 10px;
+  }
+  .services-markets-section {
+    padding: clamp(3.5rem, 7vh, 5rem) 0;
+  }
+  .services-markets-title {
+    font-size: clamp(1.85rem, 6.5vw, 2.5rem);
+  }
+  .services-cards-grid-5 {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .services-cards-grid-5 > :last-child {
+    grid-column: auto;
+    max-width: 100%;
+  }
+  .service-black-card {
+    min-height: auto;
+    padding: 2.5rem 1.6rem 2rem;
+  }
+  .services-ready-section {
+    padding: clamp(4rem, 8vh, 5.5rem) 0 clamp(3.5rem, 6vh, 4.5rem);
+  }
+  .services-ready-title {
+    font-size: clamp(2rem, 7.5vw, 2.75rem);
+  }
+  .services-division-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .services-division-card {
+    min-height: auto;
+    padding: 1.85rem 1.5rem;
+  }
+
+  /* Stories Page */
+  .story-selector-tabs {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+  .story-tab-card {
+    padding: 1.25rem 1.2rem;
+  }
+  .case-study-showcase-box {
+    padding: 2rem 1.4rem;
+    border-radius: 16px;
+  }
+  .case-study-headline {
+    font-size: clamp(1.85rem, 6.5vw, 2.5rem);
+    line-height: 1.18;
+  }
+  .case-study-tagline {
+    font-size: 1.02rem;
+    line-height: 1.55;
+    margin-bottom: 2rem;
+  }
+  .case-study-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 1.5rem 1.25rem;
+    margin-bottom: 2.25rem;
+    border-radius: 12px;
+  }
+  .metric-val {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+  }
+  .metric-lbl {
+    font-size: 0.75rem;
+  }
+  .case-study-body-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    margin-bottom: 2.25rem;
+  }
+  .case-study-tech-wrap {
+    margin-bottom: 2.5rem;
+  }
+  .case-study-quote-card {
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+  }
+  .quote-icon {
+    font-size: 2.75rem;
+  }
+  .quote-text {
+    font-size: clamp(1.05rem, 3.8vw, 1.25rem);
+  }
+  .inner-cta-banner {
+    padding: clamp(3.5rem, 7vh, 5rem) 0;
+  }
+  .inner-cta-title {
+    font-size: clamp(1.85rem, 6.5vw, 2.5rem);
+  }
+  .inner-cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.85rem;
+    margin-top: 1.75rem;
+  }
+  .cta-primary-pill, 
+  .cta-secondary-pill {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  /* Contact Page */
+  .contact-form-panel {
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+  }
+  .dual-selector-row {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .form-inputs-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .studios-list {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .studio-location-card {
+    padding: 1.5rem 1.35rem;
+  }
+  .faq-accordion-wrap {
+    gap: 0.75rem;
+  }
+  .faq-question-header {
+    padding: 1.25rem 1.35rem;
+  }
+  .faq-question-title {
+    font-size: 1.05rem;
+  }
+  .faq-answer-body {
+    padding: 0 1.35rem 1.35rem;
+  }
+
+  /* Cross Navigation */
+  .cross-nav-banner {
+    padding: clamp(3.5rem, 7vh, 5rem) 0;
+  }
+  .cross-nav-header h2 {
+    font-size: clamp(1.85rem, 6.5vw, 2.4rem);
+  }
+  .cross-nav-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .cross-nav-card {
+    min-height: auto;
+    padding: 1.75rem 1.5rem;
+  }
+}
+
+/* ─── 4. Compact Mobile Devices (max-width: 480px) ───────────────────────── */
+@media (max-width: 480px) {
+  /* Capabilities */
+  .cap-hero h1 {
+    font-size: clamp(1.95rem, 8.5vw, 2.5rem);
+  }
+  .cap-hero-index {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .cap-explore-link {
+    display: block;
+    margin: 1.15rem 0 0;
+  }
+  .cap-card {
+    padding: 2rem 1.35rem 1.75rem !important;
+  }
+  .cap-card h3 {
+    font-size: 1.22rem;
+  }
+  .cap-card p {
+    font-size: 0.85rem;
+  }
+
+  /* Services */
+  .services-hero-black-title {
+    font-size: clamp(1.75rem, 8vw, 2.15rem);
+  }
+  .service-black-card {
+    padding: 2.2rem 1.25rem 1.85rem;
+  }
+  .service-black-card-title {
+    font-size: 1.22rem;
+  }
+  .service-black-card-desc {
+    font-size: 0.86rem;
+  }
+  .services-division-card {
+    padding: 1.5rem 1.2rem;
+  }
+  .services-div-title {
+    font-size: 1.15rem;
+  }
+
+  /* Stories */
+  .case-study-showcase-box {
+    padding: 1.5rem 1.15rem;
+    border-radius: 14px;
+  }
+  .case-study-metrics-grid {
+    grid-template-columns: 1fr;
+    padding: 1.25rem 1rem;
+    gap: 0.85rem;
+  }
+  .case-study-quote-card {
+    padding: 1.6rem 1.15rem;
+  }
+  .tech-pill {
+    font-size: 0.78rem;
+    padding: 0.35rem 0.75rem;
+  }
+
+  /* Contact */
+  .contact-form-panel {
+    padding: 1.5rem 1.15rem;
+    border-radius: 14px;
+  }
+  .form-section-title {
+    font-size: 1.08rem;
+  }
+  .choice-pill {
+    font-size: 0.82rem;
+    padding: 0.45rem 0.85rem;
+  }
+  .choice-pill-small {
+    font-size: 0.78rem;
+    padding: 0.38rem 0.75rem;
+  }
+  .submit-inquiry-btn {
+    padding: 0.95rem;
+    font-size: 0.95rem;
+  }
+  .guarantee-card {
+    padding: 1.5rem 1.25rem;
+  }
+  .studio-location-card {
+    padding: 1.25rem 1.15rem;
+  }
+  .faq-question-header {
+    padding: 1rem 1.15rem;
+  }
+  .faq-question-title {
+    font-size: 0.98rem;
+  }
+  .faq-answer-body {
+    padding: 0 1.15rem 1.15rem;
+  }
+  .cross-nav-card {
+    padding: 1.5rem 1.2rem;
+  }
+}
+
+/* ─── 5. Small Foldable & Mini Devices (max-width: 360px) ─────────────────── */
+@media (max-width: 360px) {
+  .cap-hero h1,
+  .inner-hero-title,
+  .services-hero-black-title {
+    font-size: 1.75rem !important;
+  }
+  .container {
+    padding: 0 1rem !important;
+  }
+  .header-inner {
+    padding: 1.1rem 1rem 0.5rem !important;
+  }
 }
