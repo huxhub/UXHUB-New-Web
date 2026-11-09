@@ -305,19 +305,19 @@ export default function App() {
       <main className="main-content-flow">
         {currentPage === 'home' && (
           <HomePage 
-            onOpenContact={() => setContactOpen(true)} 
+            onOpenContact={() => navigate('contact')} 
             onNavigate={navigate} 
           />
         )}
         {currentPage === 'services' && (
           <ServicesPage 
-            onOpenContact={() => setContactOpen(true)} 
+            onOpenContact={() => navigate('contact')} 
             onNavigate={navigate} 
           />
         )}
         {currentPage === 'stories' && (
           <StoriesPage 
-            onOpenContact={() => setContactOpen(true)} 
+            onOpenContact={() => navigate('contact')} 
             onNavigate={navigate} 
           />
         )}

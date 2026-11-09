@@ -195,7 +195,7 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.65, delay: idx * 0.1, ease: springEase }}
                   whileHover={{ y: -8 }}
-                  onClick={() => (onOpenContact ? onOpenContact() : onNavigate('contact'))}
+                  onClick={() => onNavigate('contact')}
                 >
                   <div className="service-black-card-icon-box">
                     <CardIcon size={46} color="currentColor" />
@@ -263,7 +263,7 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
 
               <button 
                 className="services-practice-cta"
-                onClick={() => (onOpenContact ? onOpenContact() : onNavigate('contact'))}
+                onClick={() => onNavigate('contact')}
               >
                 <span>BUILD DIGITAL EXPERIENCE</span>
                 <span className="practice-cta-circle" aria-hidden="true">
@@ -355,7 +355,7 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
 
             <button 
               className="services-conversation-btn"
-              onClick={() => (onOpenContact ? onOpenContact() : onNavigate('contact'))}
+              onClick={() => onNavigate('contact')}
             >
               <span className="conversation-arrow">
                 <DiagonalArrowIcon size={16} color="currentColor" />

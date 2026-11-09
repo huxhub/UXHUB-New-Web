@@ -423,7 +423,7 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
 
             <button 
               className="services-conversation-btn"
-              onClick={() => (onOpenContact ? onOpenContact() : onNavigate('contact'))}
+              onClick={() => onNavigate('contact')}
             >
               <span className="conversation-arrow">
                 <DiagonalArrowIcon size={16} color="currentColor" />
