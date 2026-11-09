@@ -88,25 +88,15 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
         <div className="container services-hero-container">
           <motion.div 
             className="services-hero-black-content"
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: springEase }}
+            transition={{ duration: 0.6, ease: springEase }}
           >
             <h1 className="services-hero-black-title">
-              {"We build businesses for the digital economy.".split(' ').map((word, wIdx, arr) => (
-                <span key={wIdx} className="hero-word">
-                  <span className="hero-char">{word}</span>
-                  {wIdx < arr.length - 1 ? <span className="hero-char-space">&nbsp;</span> : null}
-                </span>
-              ))}
+              We build businesses for the digital economy.
             </h1>
             <p className="services-hero-black-sub">
-              {"From 0→1 to scalable digital growth.".split(' ').map((word, wIdx, arr) => (
-                <span key={wIdx} className="hero-word">
-                  <span className="hero-char">{word}</span>
-                  {wIdx < arr.length - 1 ? <span className="hero-char-space">&nbsp;</span> : null}
-                </span>
-              ))}
+              From 0→1 to scalable digital growth.
             </p>
           </motion.div>
         </div>
@@ -121,9 +111,9 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
               tag="p"
               className="statement-p1"
               theme="light"
-              fromColor="#D1D5DB"
+              fromColor="#9CA3AF"
               toColor="#18181B"
-              fromOpacity={0.35}
+              fromOpacity={0.5}
               toOpacity={1}
               stagger={0.03}
               start="top 85%"
@@ -135,9 +125,9 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
               tag="p"
               className="statement-p2"
               theme="light"
-              fromColor="#E4E4E7"
-              toColor="#52525B"
-              fromOpacity={0.35}
+              fromColor="#9CA3AF"
+              toColor="#3F3F46"
+              fromOpacity={0.5}
               toOpacity={1}
               stagger={0.03}
               start="top 85%"

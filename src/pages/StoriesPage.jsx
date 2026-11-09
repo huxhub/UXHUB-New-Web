@@ -167,9 +167,9 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
               tag="p"
               className="statement-p1"
               theme="light"
-              fromColor="#D1D5DB"
+              fromColor="#9CA3AF"
               toColor="#000000"
-              fromOpacity={0.35}
+              fromOpacity={0.5}
               toOpacity={1}
               stagger={0.03}
               start="top 85%"
@@ -181,9 +181,9 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
               tag="p"
               className="statement-p2"
               theme="light"
-              fromColor="#E4E4E7"
-              toColor="#52525B"
-              fromOpacity={0.35}
+              fromColor="#9CA3AF"
+              toColor="#3F3F46"
+              fromOpacity={0.5}
               toOpacity={1}
               stagger={0.025}
               start="top 85%"
