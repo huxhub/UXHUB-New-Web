@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BrandCross, 
-  VectorArrowRight, 
-  CrossNavBanner,
+  DiagonalArrowIcon,
   MailIcon,
-  PhoneIcon,
-  ClockIcon
+  PhoneIcon
 } from '../components/SharedUI';
+import Effects from '../components/Effects';
+import ScrollTypographyReveal from '../components/ScrollTypographyReveal';
+
+const springEase = [0.16, 1, 0.3, 1];
 
 export default function ContactPage({ onNavigate }) {
   const [selectedServices, setSelectedServices] = useState(['Product Growth']);
-  const [selectedTimeline, setSelectedTimeline] = useState('1–3 Months');
   const [selectedMarket, setSelectedMarket] = useState('India ↔ KSA');
   const [submitted, setSubmitted] = useState(false);
-  const [activeFaq, setActiveFaq] = useState(0);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -42,298 +42,338 @@ export default function ContactPage({ onNavigate }) {
   const studios = [
     {
       country: 'India',
-      city: 'Bangalore & Mumbai',
-      role: 'Global Engineering & Product Incubation',
-      address: 'Indiranagar 100ft Road, Bengaluru, Karnataka 560038',
-      email: 'india@uxhub.agency',
-      phone: '+91 (080) 4123-8890',
-      hours: 'Mon – Fri: 09:30 – 18:30 IST'
+      city: 'Bangalore & Kerala',
+      role: 'Global Engineering & Product Incubation HQ',
+      address: 'ADM 07, Administrative Building, KINFRA Defence Park, Palakkad 679 301',
+      email: 'hello@uxhub.in',
+      phone: '+91 9745580881'
     },
     {
       country: 'Saudi Arabia',
       city: 'Riyadh',
-      role: 'Commercial Advisory & GCC Expansion',
+      role: 'Commercial Advisory & GCC Expansion Hub',
       address: 'King Fahd Road, Al Olaya District, Riyadh 12214',
-      email: 'ksa@uxhub.agency',
-      phone: '+966 (011) 489-2210',
-      hours: 'Sun – Thu: 09:00 – 17:30 AST'
+      email: 'ksa@uxhub.in',
+      phone: '+966 (011) 489-2210'
     },
     {
       country: 'United Arab Emirates',
       city: 'Dubai',
-      role: 'Cross-Border Operations & Ventures',
+      role: 'Cross-Border Operations & Venture Scale',
       address: 'DIFC Gate Precinct 4, Dubai, UAE',
-      email: 'dubai@uxhub.agency',
-      phone: '+971 (04) 388-7712',
-      hours: 'Mon – Fri: 09:00 – 18:00 GST'
-    }
-  ];
-
-  const faqs = [
-    {
-      q: 'How fast can our project begin?',
-      a: 'We typically initiate engagements within 7 to 10 business days following proposal sign-off and discovery kick-off. Fixed sprints can mobilize even faster for critical initiatives.'
-    },
-    {
-      q: 'Do we own 100% of the code, IP, and designs?',
-      a: 'Yes. All source code, Figma design files, architectural documentation, and database schemas are transferred to you with zero vendor lock-in and complete intellectual property ownership.'
-    },
-    {
-      q: 'How do you handle cross-border contracts and billing?',
-      a: 'We operate registered legal and commercial entities in India, Saudi Arabia, and the UAE, allowing seamless local invoicing in INR, SAR, or AED with full regulatory and tax compliance (ZATCA, GST, VAT).'
-    },
-    {
-      q: 'Can we engage for a short fixed-scope sprint instead of a retainer?',
-      a: 'Absolutely. Our 8-Week Fixed Sprint is specifically designed for 0→1 MVP builds, critical conversion audits, or isolated feature developments with guaranteed delivery dates and fixed budgets.'
-    },
-    {
-      q: 'What is your security and NDA protocol?',
-      a: 'We execute bilateral Non-Disclosure Agreements (NDAs) prior to detailed discovery. All client codebases and data pipelines strictly comply with SOC-2 Type II, ISO-27001, and local data sovereignty laws.'
+      email: 'dubai@uxhub.in',
+      phone: '+971 (04) 388-7712'
     }
   ];
 
   return (
-    <div className="inner-page contact-page">
-      {/* ─── Hero Banner (Dark) ───────────────────────────────────────────── */}
-      <section className="inner-hero-section dark-inner-section">
-        <div className="container">
-          <div className="inner-hero-header observe-reveal">
-            <span className="inner-eyebrow text-accent">
-              <BrandCross size={18} color="#FF7723" strokeWidth={3} className="inline-cross" />
-              START A CONVERSATION
-            </span>
-            <h1 className="inner-hero-title text-white">
-              Ready to build what's next? Let's discuss your growth ambitions.
+    <div className="inner-page contact-page contact-page--premium">
+      {/* ─── 1. HERO SECTION (SOLID BLACK, 100VH FULL SCREEN WITH SWIRL) ─ */}
+      <section className="contact-hero-black">
+        <div className="contact-hero-swirl-layer" aria-hidden="true">
+          <Effects kind="swirl" className="metallic-swirl-canvas" />
+        </div>
+        <div className="container contact-hero-container">
+          <motion.div 
+            className="contact-hero-black-content"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: springEase }}
+          >
+            <div className="contact-hero-kicker">
+              <BrandCross size={16} color="#FF7723" strokeWidth={3} className="hero-kicker-cross" />
+              <span>START A CONVERSATION</span>
+            </div>
+            <h1 className="contact-hero-black-title">
+              {"Let's build what's next.".split(' ').map((word, wIdx, arr) => (
+                <span key={wIdx} className="hero-word">
+                  <span className="hero-char">{word}</span>
+                  {wIdx < arr.length - 1 ? <span className="hero-char-space">&nbsp;</span> : null}
+                </span>
+              ))}
             </h1>
-            <p className="inner-hero-desc text-muted">
-              Connect directly with our senior partners across India, Saudi Arabia, and the UAE. We respond to all qualified enterprise and venture inquiries within 24 business hours.
+            <p className="contact-hero-black-sub">
+              {"Direct principal partner consultation for ambitious brands across India, Saudi Arabia and the UAE.".split(' ').map((word, wIdx, arr) => (
+                <span key={wIdx} className="hero-word">
+                  <span className="hero-char">{word}</span>
+                  {wIdx < arr.length - 1 ? <span className="hero-char-space">&nbsp;</span> : null}
+                </span>
+              ))}
             </p>
-          </div>
+
+            <div className="contact-hero-meta-bar">
+              <a href="mailto:hello@uxhub.in" className="hero-meta-chip">
+                <MailIcon size={14} color="#FF7723" />
+                <span>hello@uxhub.in</span>
+              </a>
+              <a href="tel:+919745580881" className="hero-meta-chip">
+                <PhoneIcon size={14} color="#FF7723" />
+                <span>+91 9745580881</span>
+              </a>
+              <span className="hero-meta-chip hero-meta-chip--pill">
+                24h Response SLA
+              </span>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ─── Inquiry Builder & Studios Bento ───────────────────────────────── */}
-      <section className="inner-section contact-main-section">
+      {/* ─── 2. MINIMALIST INQUIRY & STUDIOS SECTION (PURE WHITE) ───────── */}
+      <section className="contact-workspace-section">
         <div className="container">
-          <div className="contact-bento-grid">
-            {/* Form Column */}
-            <div className="contact-form-panel">
-              {submitted ? (
-                <div className="contact-success-state text-center">
-                  <div className="success-icon-wrap">
-                    <BrandCross size={54} color="#000000" strokeWidth={3} />
-                  </div>
-                  <h3 className="success-heading">Message received.</h3>
-                  <p className="success-text">
-                    Thank you, <strong>{formData.name || 'there'}</strong>. Our senior partners have received your project details and will reply directly to <strong>{formData.email}</strong> within 24 business hours.
-                  </p>
-                  <button 
-                    className="cta-primary-pill"
-                    onClick={() => {
-                      setSubmitted(false);
-                      setFormData({ name: '', email: '', phone: '', company: '', message: '' });
-                    }}
-                  >
-                    Send Another Message
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="project-inquiry-form">
-                  <div className="form-section-title">
-                    <span className="step-badge">1</span>
-                    <span>What capabilities are you looking for?</span>
-                  </div>
-                  <div className="pill-selector-wrap">
-                    {[
-                      'Product Growth (0→1)',
-                      'E-commerce & D2C',
-                      'Custom Software',
-                      'Price Intelligence',
-                      'Executive Advisory'
-                    ].map(svc => (
-                      <button
-                        type="button"
-                        key={svc}
-                        className={`choice-pill ${selectedServices.includes(svc) ? 'selected' : ''}`}
-                        onClick={() => toggleService(svc)}
-                      >
-                        {selectedServices.includes(svc) ? '✓ ' : '+ '}{svc}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="form-section-title mt-4">
-                    <span className="step-badge">2</span>
-                    <span>Target Market & Timeline</span>
-                  </div>
-                  <div className="dual-selector-row">
-                    <div className="mini-selector-group">
-                      <label className="sub-field-label">Target Market</label>
-                      <div className="pill-selector-wrap">
-                        {['India', 'Saudi Arabia (KSA)', 'India ↔ KSA', 'UAE / GCC'].map(market => (
-                          <button
-                            type="button"
-                            key={market}
-                            className={`choice-pill-small ${selectedMarket === market ? 'selected' : ''}`}
-                            onClick={() => setSelectedMarket(market)}
-                          >
-                            {market}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="mini-selector-group">
-                      <label className="sub-field-label">Expected Timeline</label>
-                      <div className="pill-selector-wrap">
-                        {['< 1 Month', '1–3 Months', '3–6 Months', 'Ongoing'].map(tl => (
-                          <button
-                            type="button"
-                            key={tl}
-                            className={`choice-pill-small ${selectedTimeline === tl ? 'selected' : ''}`}
-                            onClick={() => setSelectedTimeline(tl)}
-                          >
-                            {tl}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-section-title mt-4">
-                    <span className="step-badge">3</span>
-                    <span>Contact Details</span>
-                  </div>
-                  <div className="form-inputs-grid">
-                    <div className="input-field-group">
-                      <label>Your Name *</label>
-                      <input 
-                        type="text" 
-                        required 
-                        placeholder="Jane Doe" 
-                        value={formData.name}
-                        onChange={e => setFormData({ ...formData, name: e.target.value })}
-                      />
-                    </div>
-                    <div className="input-field-group">
-                      <label>Work Email *</label>
-                      <input 
-                        type="email" 
-                        required 
-                        placeholder="jane@company.com" 
-                        value={formData.email}
-                        onChange={e => setFormData({ ...formData, email: e.target.value })}
-                      />
-                    </div>
-                    <div className="input-field-group">
-                      <label>Phone / WhatsApp</label>
-                      <input 
-                        type="tel" 
-                        placeholder="+966 / +91 ..." 
-                        value={formData.phone}
-                        onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                      />
-                    </div>
-                    <div className="input-field-group">
-                      <label>Company / Organization</label>
-                      <input 
-                        type="text" 
-                        placeholder="e.g. Acme Retail Ltd" 
-                        value={formData.company}
-                        onChange={e => setFormData({ ...formData, company: e.target.value })}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="input-field-group mt-3">
-                    <label>Tell us about your digital goals & challenges</label>
-                    <textarea 
-                      rows={4}
-                      placeholder="Share details regarding your current technology stack, target audience, or desired launch date..."
-                      value={formData.message}
-                      onChange={e => setFormData({ ...formData, message: e.target.value })}
-                    />
-                  </div>
-
-                  <button type="submit" className="submit-inquiry-btn">
-                    <span>Submit Project Inquiry</span>
-                    <VectorArrowRight width={18} height={16} />
-                  </button>
-                </form>
-              )}
-            </div>
-
-            {/* Studios & Info Column */}
-            <div className="studios-info-panel">
-              <div className="guarantee-card">
-                <span className="guarantee-badge">EXECUTIVE RESPONSE GUARANTEE</span>
-                <h4>Direct Partner Access</h4>
-                <p>Every inquiry is personally reviewed by a principal partner in Bangalore, Riyadh, or Dubai. No junior SDR gatekeepers.</p>
+          <div className="contact-workspace-grid">
+            
+            {/* Left Column: Direct Consultation & Studios Directory */}
+            <motion.div 
+              className="contact-studios-column"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: springEase }}
+            >
+              <div className="studios-directory-header">
+                <ScrollTypographyReveal
+                  text="REGIONAL PRESENCE & ADVISORY"
+                  tag="span"
+                  className="directory-eyebrow"
+                  theme="light"
+                  fromColor="#9CA3AF"
+                  toColor="#71717A"
+                  fromOpacity={0.4}
+                  toOpacity={1}
+                  stagger={0.04}
+                  start="top 85%"
+                  end="bottom 60%"
+                  scrub={0.8}
+                />
+                <ScrollTypographyReveal
+                  text="Direct principal access."
+                  tag="h2"
+                  className="directory-title"
+                  theme="light"
+                  fromColor="#D1D5DB"
+                  toColor="#000000"
+                  fromOpacity={0.35}
+                  toOpacity={1}
+                  start="top 85%"
+                  end="bottom 50%"
+                  scrub={0.8}
+                />
+                <ScrollTypographyReveal
+                  text="Every inquiry is personally reviewed by a founding principal in Bangalore, Riyadh, or Dubai. No junior account gatekeepers."
+                  tag="p"
+                  className="directory-desc"
+                  theme="light"
+                  fromColor="#D1D5DB"
+                  toColor="#52525B"
+                  fromOpacity={0.35}
+                  toOpacity={1}
+                  stagger={0.025}
+                  start="top 80%"
+                  end="bottom 45%"
+                  scrub={0.8}
+                />
               </div>
 
-              <div className="studios-list">
+              {/* Studios List */}
+              <div className="minimal-studios-list">
                 {studios.map((studio, idx) => (
-                  <div key={idx} className="studio-location-card">
-                    <div className="studio-flag-row">
-                      <span className="studio-city">{studio.city}</span>
-                      <span className="studio-country-pill">{studio.country}</span>
+                  <div key={idx} className="minimal-studio-card">
+                    <div className="minimal-studio-top">
+                      <h3 className="minimal-studio-city">{studio.city}</h3>
+                      <span className="minimal-studio-country">{studio.country}</span>
                     </div>
-                    <p className="studio-role">{studio.role}</p>
-                    <p className="studio-address">{studio.address}</p>
-                    <div className="studio-contact-links">
-                      <a href={`mailto:${studio.email}`} className="studio-link">
-                        <MailIcon size={14} color="currentColor" />
+                    <p className="minimal-studio-role">{studio.role}</p>
+                    <p className="minimal-studio-address">{studio.address}</p>
+                    <div className="minimal-studio-links">
+                      <a href={`mailto:${studio.email}`} className="studio-contact-link">
+                        <MailIcon size={13} color="currentColor" />
                         <span>{studio.email}</span>
                       </a>
-                      <a href={`tel:${studio.phone.replace(/[^0-9+]/g, '')}`} className="studio-link">
-                        <PhoneIcon size={14} color="currentColor" />
+                      <a href={`tel:${studio.phone.replace(/[^0-9+]/g, '')}`} className="studio-contact-link">
+                        <PhoneIcon size={13} color="currentColor" />
                         <span>{studio.phone}</span>
                       </a>
                     </div>
-                    <span className="studio-hours">
-                      <ClockIcon size={14} color="currentColor" />
-                      <span>{studio.hours}</span>
-                    </span>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ─── Frequently Asked Questions Accordion ─────────────────────────── */}
-      <section className="inner-section faq-section">
-        <div className="container">
-          <div className="section-intro-center text-center">
-            <span className="inner-eyebrow">FREQUENTLY ASKED QUESTIONS</span>
-            <h2 className="light-section-title">Common questions about working with UXHub</h2>
-          </div>
-
-          <div className="faq-accordion-wrap">
-            {faqs.map((faq, idx) => (
-              <div 
-                key={idx} 
-                className={`faq-accordion-item ${activeFaq === idx ? 'expanded' : ''}`}
-                onClick={() => setActiveFaq(activeFaq === idx ? -1 : idx)}
-              >
-                <div className="faq-question-header">
-                  <h3 className="faq-question-title">{faq.q}</h3>
-                  <span className="faq-toggle-icon">{activeFaq === idx ? '−' : '+'}</span>
+              {/* Trust & Compliance Protocol */}
+              <div className="compliance-strip">
+                <div className="compliance-item">
+                  <span className="compliance-dot" />
+                  <span>Bilateral NDA Executed</span>
                 </div>
-                {activeFaq === idx && (
-                  <div className="faq-answer-body">
-                    <p>{faq.a}</p>
+                <div className="compliance-item">
+                  <span className="compliance-dot" />
+                  <span>INR · SAR · AED Invoicing</span>
+                </div>
+                <div className="compliance-item">
+                  <span className="compliance-dot" />
+                  <span>100% IP & Code Ownership</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Premium Minimalist Form */}
+            <motion.div 
+              className="contact-form-column"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: springEase }}
+            >
+              <div className="minimal-form-box">
+                {submitted ? (
+                  <div className="form-success-box text-center">
+                    <div className="success-brand-mark">
+                      <BrandCross size={48} color="#FF7723" strokeWidth={2.5} />
+                    </div>
+                    <h3 className="success-title">Message Received.</h3>
+                    <p className="success-copy">
+                      Thank you, <strong>{formData.name || 'there'}</strong>. Our principals have received your project details and will follow up directly at <strong>{formData.email}</strong> within 24 business hours.
+                    </p>
+                    <button 
+                      type="button"
+                      className="success-reset-btn"
+                      onClick={() => {
+                        setSubmitted(false);
+                        setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+                      }}
+                    >
+                      <span>Send Another Inquiry</span>
+                      <DiagonalArrowIcon size={14} color="currentColor" />
+                    </button>
                   </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="minimal-inquiry-form">
+                    
+                    {/* Capability Selector */}
+                    <div className="form-group-block">
+                      <label className="minimal-field-label">
+                        Capabilities of interest
+                      </label>
+                      <div className="minimal-chips-grid">
+                        {[
+                          'Product Growth (0→1)',
+                          'E-commerce & D2C Scale',
+                          'Digital Experience Platform',
+                          'Pricing Intelligence Software'
+                        ].map(svc => {
+                          const isSelected = selectedServices.includes(svc);
+                          return (
+                            <button
+                              type="button"
+                              key={svc}
+                              className={`minimal-chip ${isSelected ? 'is-selected' : ''}`}
+                              onClick={() => toggleService(svc)}
+                            >
+                              <span>{svc}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Target Market Selector */}
+                    <div className="form-group-block">
+                      <label className="minimal-field-label">
+                        Primary Target Market
+                      </label>
+                      <div className="minimal-chips-grid minimal-chips-grid--market">
+                        {[
+                          'India',
+                          'Saudi Arabia (KSA)',
+                          'India ↔ KSA',
+                          'UAE & GCC'
+                        ].map(market => {
+                          const isSelected = selectedMarket === market;
+                          return (
+                            <button
+                              type="button"
+                              key={market}
+                              className={`minimal-chip ${isSelected ? 'is-selected' : ''}`}
+                              onClick={() => setSelectedMarket(market)}
+                            >
+                              <span>{market}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Form Inputs Grid */}
+                    <div className="minimal-fields-grid">
+                      <div className="minimal-input-wrap">
+                        <label className="minimal-field-label">Your Name *</label>
+                        <input 
+                          type="text" 
+                          required 
+                          placeholder="e.g. Rahul Sharma" 
+                          value={formData.name}
+                          onChange={e => setFormData({ ...formData, name: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="minimal-input-wrap">
+                        <label className="minimal-field-label">Work Email *</label>
+                        <input 
+                          type="email" 
+                          required 
+                          placeholder="rahul@brand.com" 
+                          value={formData.email}
+                          onChange={e => setFormData({ ...formData, email: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="minimal-input-wrap">
+                        <label className="minimal-field-label">Phone / WhatsApp</label>
+                        <input 
+                          type="tel" 
+                          placeholder="+91 / +966 / +971 ..." 
+                          value={formData.phone}
+                          onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="minimal-input-wrap">
+                        <label className="minimal-field-label">Company / Brand</label>
+                        <input 
+                          type="text" 
+                          placeholder="Acme Retail & Tech Ltd" 
+                          value={formData.company}
+                          onChange={e => setFormData({ ...formData, company: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Message Area */}
+                    <div className="minimal-input-wrap mt-field">
+                      <label className="minimal-field-label">Project Scope & Objectives</label>
+                      <textarea 
+                        rows={4}
+                        placeholder="Share your timeline, current software architecture, or growth milestones..."
+                        value={formData.message}
+                        onChange={e => setFormData({ ...formData, message: e.target.value })}
+                      />
+                    </div>
+
+                    {/* Submit Action */}
+                    <button type="submit" className="minimal-submit-btn">
+                      <span>Submit Project Inquiry</span>
+                      <span className="submit-arrow-circle">
+                        <DiagonalArrowIcon size={15} color="currentColor" />
+                      </span>
+                    </button>
+                  </form>
                 )}
               </div>
-            ))}
+            </motion.div>
+
           </div>
         </div>
       </section>
-
-      {/* ─── Cross Navigation Banner (Connecting to Other Divisions) ─────── */}
-      <CrossNavBanner current="contact" onNavigate={onNavigate} theme="dark" />
     </div>
   );
 }
-

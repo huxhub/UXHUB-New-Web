@@ -87,32 +87,40 @@ export const Arrow6Icon = ({ width = 28, height = 14, color = 'currentColor', cl
   </svg>
 );
 
-// ─── Service Icons (from assets/Brutalist 33, 13, 27, Shape 199) ─────────────
-export const ArchIcon = ({ size = 76, color = 'currentColor' }) => (
+// ─── Service Icons (from assets/Brutalist 33, 13, 27, Shape 199, 57) ─────────
+export const ArchIcon = ({ size = 76, color = 'currentColor', dotColor }) => (
   <svg width={size} height={size} viewBox="0 0 117 117" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 0V116.966H36.5795V48.7613C36.5795 36.6473 46.386 26.8408 58.5 26.8408C70.614 26.8408 80.4205 36.6473 80.4205 48.7613V117H117V0H0Z" fill={color}/>
-    <circle cx="58.5" cy="13.5" r="6.5" fill="#FF7723"/>
+    <circle cx="58.5" cy="13.5" r="6.5" fill={dotColor || color}/>
   </svg>
 );
 
-export const WedgeIcon = ({ size = 76, color = 'currentColor' }) => (
+export const WedgeIcon = ({ size = 76, color = 'currentColor', dotColor }) => (
   <svg width={size} height={size} viewBox="0 0 117 117" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M117 117H0V88.0486C48.6234 88.0486 88.0213 48.6384 88.0213 0H116.964V117H117Z" fill={color}/>
-    <circle cx="96.5" cy="97.5" r="6.5" fill="#FF7723"/>
+    <circle cx="96.5" cy="97.5" r="6.5" fill={dotColor || color}/>
   </svg>
 );
 
-export const HourglassIcon = ({ size = 76, color = 'currentColor' }) => (
+export const HourglassIcon = ({ size = 76, color = 'currentColor', dotColor }) => (
   <svg width={size} height={size} viewBox="0 0 117 117" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M79.4833 58.5171C79.4833 37.8016 96.2563 21.0237 116.966 21.0237V0H0V23.4205C20.7095 23.4205 37.4824 40.1984 37.4824 60.914C37.4824 81.6295 20.7095 98.4074 0 98.4074V117H117V96.0105C96.2905 96.0105 79.4833 79.2327 79.4833 58.5171Z" fill={color}/>
-    <circle cx="58.5" cy="58.5" r="6.5" fill="#FF7723"/>
+    <circle cx="58.5" cy="58.5" r="6.5" fill={dotColor || color}/>
   </svg>
 );
 
-export const PillarShapeIcon = ({ size = 76, color = 'currentColor' }) => (
+export const PillarShapeIcon = ({ size = 76, color = 'currentColor', dotColor }) => (
   <svg width={size} height={size} viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M43 0C19.2426 0 0 19.2667 0 43V86H21.3189C21.3189 74.0247 31.0247 64.3189 43 64.3189C54.9753 64.3189 64.6811 74.0247 64.6811 86H86V43C86 19.2426 66.7574 0 43 0Z" fill={color}/>
-    <circle cx="43" cy="24" r="6" fill="#FF7723"/>
+    <circle cx="43" cy="24" r="6" fill={dotColor || color}/>
+  </svg>
+);
+
+export const CrescentBrutalistIcon = ({ size = 76, color = 'currentColor', dotColor }) => (
+  <svg width={size} height={size} viewBox="0 0 87 87" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M87 0H61.6973C61.6973 10.0601 53.5367 18.1973 43.5 18.1973C33.4399 18.1973 25.3027 10.0367 25.3027 0H0C0 24.0364 19.4871 43.5 43.5 43.5C67.5129 43.5 87 24.0364 87 0Z" fill={color}/>
+    <path d="M43.5 43.5C19.4871 43.5 0 62.9636 0 87H25.2792C25.2792 76.9399 33.4399 68.8027 43.4765 68.8027C53.5367 68.8027 61.6739 76.9633 61.6739 87H86.9531C87 62.9636 67.5129 43.5 43.5 43.5Z" fill={color}/>
+    <circle cx="43.5" cy="43.5" r="5.5" fill={dotColor || color}/>
   </svg>
 );
 
@@ -480,15 +488,8 @@ export const CrossNavBanner = ({ current, onNavigate, theme = "auto" }) => {
       id: 'services', 
       title: 'Services', 
       tagline: 'Pillars & Engagement Models', 
-      desc: 'Product growth, D2C e-commerce scaling, custom software, and dynamic price intelligence.',
-      badge: '4 Pillars'
-    },
-    { 
-      id: 'capabilities', 
-      title: 'Capabilities', 
-      tagline: 'Architecture & Tech Matrix', 
-      desc: 'Edge-rendered frontends, sub-650ms SLAs, zero-trust cloud, and high-concurrency commerce.',
-      badge: 'Tech Spec'
+      desc: 'Product growth, D2C e-commerce scaling, custom software, and digital experience engineering.',
+      badge: 'Services'
     },
     { 
       id: 'stories', 
@@ -517,7 +518,7 @@ export const CrossNavBanner = ({ current, onNavigate, theme = "auto" }) => {
             <span className="cross-nav-eyebrow">EXPLORE UXHUB ECOSYSTEM</span>
           </div>
           <h3 className="cross-nav-title">Connect with other divisions</h3>
-          <p className="cross-nav-subtitle">Navigate seamlessly between strategy, technical capabilities, case studies, and advisory.</p>
+          <p className="cross-nav-subtitle">Navigate seamlessly between growth strategy, services, case studies, and regional advisory.</p>
         </div>
 
         <div className="cross-nav-grid">

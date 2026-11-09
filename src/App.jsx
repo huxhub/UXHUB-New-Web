@@ -13,7 +13,6 @@ import {
 
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
-import CapabilitiesPage from './pages/CapabilitiesPage';
 import StoriesPage from './pages/StoriesPage';
 import ContactPage from './pages/ContactPage';
 
@@ -23,15 +22,17 @@ gsap.registerPlugin(ScrollTrigger);
 export const NAV_LINKS = [
   { id: 'home', label: 'Home', path: '#/' },
   { id: 'services', label: 'Services', path: '#/services' },
-  { id: 'capabilities', label: 'Capabilities', path: '#/capabilities' },
   { id: 'stories', label: 'Featured Stories', path: '#/stories' },
   { id: 'contact', label: 'Contact', path: '#/contact' }
 ];
 
 export const resolvePageFromHash = (hash) => {
   const clean = (hash || '').replace(/^#\/?/, '').toLowerCase().trim();
-  if (['services', 'capabilities', 'stories', 'contact'].includes(clean)) {
+  if (['services', 'stories', 'contact'].includes(clean)) {
     return clean;
+  }
+  if (clean === 'capabilities') {
+    return 'services';
   }
   if (clean === 'featured-stories' || clean === 'featuredstories') {
     return 'stories';
@@ -140,7 +141,7 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Initialize Lenis smooth scroll
+  // Initialize Lenis smooth scroll once on mount
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.25,
@@ -167,6 +168,22 @@ export default function App() {
       ScrollTrigger.refresh();
     });
 
+    return () => {
+      lenis.off('scroll', ScrollTrigger.update);
+      gsap.ticker.remove(updateTicker);
+      lenis.destroy();
+      delete window.__lenis;
+    };
+  }, []);
+
+  // Per-page change updates: anchor clicks, scroll reveal observer & ScrollTrigger sync
+  useEffect(() => {
+    // Scroll to top immediately on page change
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
     // Global interception for smooth gliding or cross-page anchor routing
     const handleAnchorClick = (e) => {
       const anchor = e.target.closest('a[href^="#"]');
@@ -181,11 +198,16 @@ export default function App() {
         return;
       }
 
-      // Local hash like #services, #capabilities, #stories, #contact
+      // Local hash like #services, #stories, #contact
       const clean = href.replace(/^#/, '').toLowerCase();
-      if (['services', 'capabilities', 'stories', 'contact', 'home'].includes(clean)) {
+      if (['services', 'stories', 'contact', 'home'].includes(clean)) {
         e.preventDefault();
         navigate(clean);
+        return;
+      }
+      if (clean === 'capabilities') {
+        e.preventDefault();
+        navigate('services');
         return;
       }
 
@@ -203,9 +225,9 @@ export default function App() {
       }
 
       const target = document.querySelector(href);
-      if (target) {
+      if (target && window.__lenis) {
         e.preventDefault();
-        lenis.scrollTo(target, { offset: 0, duration: 1.25 });
+        window.__lenis.scrollTo(target, { offset: 0, duration: 1.25 });
       }
     };
     document.addEventListener('click', handleAnchorClick);
@@ -226,13 +248,15 @@ export default function App() {
     const revealElements = document.querySelectorAll('.observe-reveal');
     revealElements.forEach((el) => observer.observe(el));
 
+    // Refresh ScrollTrigger to synchronize triggers with page layout & Lenis
+    const t1 = setTimeout(() => ScrollTrigger.refresh(), 80);
+    const t2 = setTimeout(() => ScrollTrigger.refresh(), 250);
+
     return () => {
-      lenis.off('scroll', ScrollTrigger.update);
-      gsap.ticker.remove(updateTicker);
+      clearTimeout(t1);
+      clearTimeout(t2);
       document.removeEventListener('click', handleAnchorClick);
       observer.disconnect();
-      lenis.destroy();
-      delete window.__lenis;
     };
   }, [currentPage]);
 
@@ -291,12 +315,6 @@ export default function App() {
             onNavigate={navigate} 
           />
         )}
-        {currentPage === 'capabilities' && (
-          <CapabilitiesPage 
-            onOpenContact={() => setContactOpen(true)} 
-            onNavigate={navigate} 
-          />
-        )}
         {currentPage === 'stories' && (
           <StoriesPage 
             onOpenContact={() => setContactOpen(true)} 
@@ -341,15 +359,6 @@ export default function App() {
               </li>
               <li>
                 <a 
-                  href="#/capabilities" 
-                  className={`footer-nav-item-btn ${currentPage === 'capabilities' ? 'active-footer-link' : ''}`} 
-                  onClick={(e) => { e.preventDefault(); navigate('capabilities'); }}
-                >
-                  Capabilities
-                </a>
-              </li>
-              <li>
-                <a 
                   href="#/stories" 
                   className={`footer-nav-item-btn ${currentPage === 'stories' ? 'active-footer-link' : ''}`} 
                   onClick={(e) => { e.preventDefault(); navigate('stories'); }}
@@ -365,14 +374,6 @@ export default function App() {
                 >
                   Contact
                 </a>
-              </li>
-              <li>
-                <button 
-                  className="footer-nav-item-btn footer-nav-item-btn--talk" 
-                  onClick={() => setContactOpen(true)}
-                >
-                  Quick Inquiry
-                </button>
               </li>
             </ul>
           </nav>

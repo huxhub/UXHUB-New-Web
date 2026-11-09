@@ -404,7 +404,7 @@ export default function HomePage({ onOpenContact, onNavigate }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.05 }}
-                onClick={() => onNavigate('capabilities')}
+                onClick={() => onNavigate('services')}
               >
                 <div className="tech-symbol-wrapper">
                   {tech.icon}
@@ -415,8 +415,8 @@ export default function HomePage({ onOpenContact, onNavigate }) {
           </div>
 
           <div className="tech-cta-wrapper text-center mt-4">
-            <button className="cta-secondary-pill-dark" onClick={() => onNavigate('capabilities')}>
-              View Full Architecture & Tech Capabilities →
+            <button className="cta-secondary-pill-dark" onClick={() => onNavigate('services')}>
+              Explore Our Services & Solutions →
             </button>
           </div>
         </div>

@@ -3,12 +3,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BrandCross, 
   VectorArrowRight, 
-  CrossNavBanner,
-  KareonHexIcon,
+  DiagonalArrowIcon,
   ArchIcon,
-  PillarShapeIcon
+  WedgeIcon,
+  PillarShapeIcon,
+  KareonHexIcon,
+  Arrow6Icon
 } from '../components/SharedUI';
+import Effects from '../components/Effects';
 import ScrollTypographyReveal from '../components/ScrollTypographyReveal';
+
+const springEase = [0.16, 1, 0.3, 1];
 
 export default function StoriesPage({ onOpenContact, onNavigate }) {
   const [selectedStory, setSelectedStory] = useState('brand-swamy');
@@ -17,7 +22,7 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
     {
       id: 'brand-swamy',
       title: 'Brand Swamy',
-      icon: <BrandCross size={32} color="currentColor" />,
+      iconComponent: ArchIcon,
       category: '0 → 1 Product Incubation',
       market: 'India ↔ UAE',
       tagline: 'From unvalidated concept to a multi-million GMV consumer platform in 9 months.',
@@ -39,7 +44,7 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
     {
       id: 'kareon-repairs',
       title: 'Kareon Repairs',
-      icon: <KareonHexIcon size={32} color="currentColor" />,
+      iconComponent: KareonHexIcon,
       category: 'D2C Commerce & Marketplace Scale',
       market: 'Saudi Arabia (Riyadh & Jeddah)',
       tagline: 'Modernizing aftermarket hardware and repairs commerce with native Arabic RTL UX.',
@@ -60,8 +65,8 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
     },
     {
       id: 'digital-experience',
-      title: 'Digital Experience',
-      icon: <ArchIcon size={32} color="currentColor" />,
+      title: 'Digital Experience Platform',
+      iconComponent: WedgeIcon,
       category: 'Enterprise SaaS Platform',
       market: 'India ↔ KSA ↔ Global',
       tagline: 'Engineering an ISO-27001 compliant enterprise platform with sub-50ms latency.',
@@ -83,7 +88,7 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
     {
       id: 'pricing-super-intelligence',
       title: 'GCC Pricing Intelligence Engine',
-      icon: <PillarShapeIcon size={32} color="currentColor" />,
+      iconComponent: PillarShapeIcon,
       category: 'Algorithmic Commerce Software',
       market: 'Saudi Arabia & UAE',
       tagline: 'Defending brand margins with real-time automated competitor price scraping and dynamic repricing.',
@@ -95,7 +100,7 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
       ],
       challenge: 'Rapidly shifting price wars on Amazon Saudi and Noon were causing severe margin erosion and stockouts for premium retail distributors without dedicated competitive intelligence.',
       solution: 'UXHub engineered an automated scraping cluster monitoring 50,000+ SKUs every 15 minutes, coupled with algorithmic margin-floor protection and dynamic repricing webhooks directly into seller central APIs.',
-      techStack: ['Python FastApi', 'Puppeteer Cluster', 'BigQuery', 'Redis Queue', 'Amazon SP-API', 'Slack Webhooks'],
+      techStack: ['Python FastAPI', 'Puppeteer Cluster', 'BigQuery', 'Redis Queue', 'Amazon SP-API', 'Slack Webhooks'],
       quote: {
         text: "We gained complete visibility over GCC pricing dynamics within our first week of deployment. It immediately protected millions of SAR in retail gross margin.",
         author: "Tariq Mansoor",
@@ -105,74 +110,186 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
   ];
 
   const currentStory = detailedStories.find(s => s.id === selectedStory) || detailedStories[0];
+  const CurrentIcon = currentStory.iconComponent;
+
+  const scrollToSpotlight = (storyId) => {
+    setSelectedStory(storyId);
+    const target = document.getElementById('story-spotlight');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
-    <div className="inner-page stories-page">
-      {/* ─── Hero Banner ──────────────────────────────────────────────────── */}
-      <section className="inner-hero-section">
-        <div className="container">
-          <div className="inner-hero-header observe-reveal">
-            <span className="inner-eyebrow">
-              <BrandCross size={18} color="#FF7723" strokeWidth={3} className="inline-cross" />
-              CASE STUDIES & PROVEN IMPACT
-            </span>
-            <h1 className="inner-hero-title">
-              Real results for ambitious brands across India and Saudi Arabia.
+    <div className="inner-page stories-page stories-page--home-style">
+      {/* ─── 1. HERO SECTION (SOLID BLACK, 100VH FULL SCREEN) ───────────── */}
+      <section className="stories-hero-black">
+        <div className="stories-hero-swirl-layer" aria-hidden="true">
+          <Effects kind="swirl" className="metallic-swirl-canvas" />
+        </div>
+        <div className="container stories-hero-container">
+          <motion.div 
+            className="stories-hero-black-content"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: springEase }}
+          >
+            <div className="stories-hero-kicker">
+              <BrandCross size={16} color="#FF7723" strokeWidth={3} className="hero-kicker-cross" />
+              <span>PROVEN GROWTH OUTCOMES</span>
+            </div>
+            <h1 className="stories-hero-black-title">
+              {"Real results for ambitious brands.".split(' ').map((word, wIdx, arr) => (
+                <span key={wIdx} className="hero-word">
+                  <span className="hero-char">{word}</span>
+                  {wIdx < arr.length - 1 ? <span className="hero-char-space">&nbsp;</span> : null}
+                </span>
+              ))}
             </h1>
-            <p className="inner-hero-desc">
-              Explore how we partner with enterprise leaders, direct-to-consumer innovators, and venture-backed founders to deliver quantifiable business growth and technical excellence.
+            <p className="stories-hero-black-sub">
+              {"Case studies and verified digital performance across India, KSA and the UAE.".split(' ').map((word, wIdx, arr) => (
+                <span key={wIdx} className="hero-word">
+                  <span className="hero-char">{word}</span>
+                  {wIdx < arr.length - 1 ? <span className="hero-char-space">&nbsp;</span> : null}
+                </span>
+              ))}
             </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── 2. STATEMENT & IMPACT STATS SECTION (WHITE) ─────────────────── */}
+      <section className="stories-showcase-section">
+        <div className="container">
+          <div className="stories-editorial-statements">
+            <ScrollTypographyReveal
+              text="We measure success not by deliverables, but by quantifiable growth outcomes."
+              tag="p"
+              className="statement-p1"
+              theme="light"
+              fromColor="#D1D5DB"
+              toColor="#000000"
+              fromOpacity={0.35}
+              toOpacity={1}
+              stagger={0.03}
+              start="top 85%"
+              end="bottom 50%"
+              scrub={0.8}
+            />
+            <ScrollTypographyReveal
+              text="From validating 0→1 digital product concepts to scaling cross-border e-commerce platforms and engineering algorithmic intelligence, we build systems that drive real market leadership."
+              tag="p"
+              className="statement-p2"
+              theme="light"
+              fromColor="#E4E4E7"
+              toColor="#52525B"
+              fromOpacity={0.35}
+              toOpacity={1}
+              stagger={0.025}
+              start="top 85%"
+              end="bottom 45%"
+              scrub={0.8}
+            />
+          </div>
+
+          {/* Verified Cumulative Impact Strip */}
+          <div className="stories-stats-strip">
+            <div className="stories-stat-box">
+              <span className="stat-number">+320%</span>
+              <span className="stat-label">Peak GMV Growth</span>
+            </div>
+            <div className="stories-stat-box">
+              <span className="stat-number">4.8x</span>
+              <span className="stat-label">Checkout Conversion Lift</span>
+            </div>
+            <div className="stories-stat-box">
+              <span className="stat-number">99.99%</span>
+              <span className="stat-label">System Uptime SLA</span>
+            </div>
+            <div className="stories-stat-box">
+              <span className="stat-number">50K+</span>
+              <span className="stat-label">Monitored Product SKUs</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ─── Interactive Case Studies Browser ──────────────────────────────── */}
-      <section className="inner-section stories-browser-section">
+      {/* ─── 3. INTERACTIVE SPOTLIGHT DEEP DIVE (BLACK) ──────────────────── */}
+      <section id="story-spotlight" className="stories-spotlight-section">
         <div className="container">
-          {/* Story Selector Bar */}
-          <div className="story-selector-tabs">
-            {detailedStories.map(story => (
-              <button
-                key={story.id}
-                className={`story-tab-card ${selectedStory === story.id ? 'active' : ''}`}
-                onClick={() => setSelectedStory(story.id)}
-              >
-                <div className="story-tab-icon-row">
-                  <span className="story-tab-icon">{story.icon}</span>
-                  <span className="story-tab-category">{story.category}</span>
-                </div>
-                <h3 className="story-tab-title">{story.title}</h3>
-                <span className="story-tab-market">{story.market}</span>
-              </button>
-            ))}
+          <div className="stories-spotlight-header">
+            <div className="section-badge-pill">
+              <span className="badge-dot" />
+              <span>VERIFIED CASE STUDIES</span>
+            </div>
+            <ScrollTypographyReveal
+              lines={[
+                "Engineered for growth.",
+                "Proven in production."
+              ]}
+              tag="h2"
+              className="stories-spotlight-title"
+              theme="dark"
+              fromColor="#3A3A3A"
+              toColor="#FFFFFF"
+              fromOpacity={0.35}
+              toOpacity={1}
+              start="top 85%"
+              end="bottom 50%"
+              scrub={0.8}
+            />
           </div>
 
-          {/* Active Story Case Study Detail */}
+          {/* Story Selector Tabs */}
+          <div className="stories-selector-grid">
+            {detailedStories.map(story => {
+              const TabIcon = story.iconComponent;
+              const isActive = selectedStory === story.id;
+              return (
+                <button
+                  key={story.id}
+                  className={`stories-select-tab ${isActive ? 'is-active' : ''}`}
+                  onClick={() => setSelectedStory(story.id)}
+                >
+                  <div className="stories-tab-top">
+                    <span className="stories-tab-icon">
+                      <TabIcon size={28} color="currentColor" />
+                    </span>
+                  </div>
+                  <h3 className="stories-tab-name">{story.title}</h3>
+                  <span className="stories-tab-region">{story.market}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active Story Case Study Detail Box (Pure White for crisp brutalist contrast) */}
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStory.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="case-study-showcase-box"
+              transition={{ duration: 0.35, ease: springEase }}
+              className="stories-showcase-box"
             >
-              <div className="case-study-header">
-                <div className="case-study-top-row">
-                  <div className="case-study-mark-badge">{currentStory.icon}</div>
-                  <div className="case-study-tag-wrap">
-                    <span className="case-study-badge">{currentStory.category}</span>
-                    <span className="case-study-region">{currentStory.market}</span>
-                  </div>
+              <div className="showcase-top-row">
+                <div className="showcase-mark-badge">
+                  <CurrentIcon size={34} color="#000000" />
                 </div>
-                <h2 className="case-study-headline">{currentStory.title}</h2>
-                <p className="case-study-tagline">{currentStory.tagline}</p>
+                <div className="showcase-tag-wrap">
+                  <span className="showcase-badge">{currentStory.category}</span>
+                  <span className="showcase-region">{currentStory.market}</span>
+                </div>
               </div>
 
+              <h2 className="showcase-headline">{currentStory.title}</h2>
+              <p className="showcase-tagline">{currentStory.tagline}</p>
+
               {/* Verified Metrics Row */}
-              <div className="case-study-metrics-grid">
+              <div className="showcase-metrics-grid">
                 {currentStory.metrics.map((metric, idx) => (
-                  <div key={idx} className="metric-highlight-card">
+                  <div key={idx} className="showcase-metric-card">
                     <span className="metric-val">{metric.value}</span>
                     <span className="metric-lbl">{metric.label}</span>
                   </div>
@@ -180,19 +297,19 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
               </div>
 
               {/* Challenge & Solution Grid */}
-              <div className="case-study-body-grid">
-                <div className="body-block challenge-block">
+              <div className="showcase-body-grid">
+                <div className="showcase-body-block challenge-block">
                   <span className="block-label">THE CHALLENGE</span>
                   <p>{currentStory.challenge}</p>
                 </div>
-                <div className="body-block solution-block">
+                <div className="showcase-body-block solution-block">
                   <span className="block-label">THE UXHUB SOLUTION</span>
                   <p>{currentStory.solution}</p>
                 </div>
               </div>
 
               {/* Tech Stack Tags */}
-              <div className="case-study-tech-wrap">
+              <div className="showcase-tech-wrap">
                 <span className="tech-stack-title">TECHNOLOGY STACK & INTEGRATIONS:</span>
                 <div className="tech-tags-list">
                   {currentStory.techStack.map((tech, tIdx) => (
@@ -200,50 +317,122 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
                   ))}
                 </div>
               </div>
-
-              {/* Client Testimonial Quote */}
-              <div className="case-study-quote-card">
-                <div className="quote-icon">“</div>
-                <p className="quote-text">{currentStory.quote.text}</p>
-                <div className="quote-author-info">
-                  <span className="author-name">{currentStory.quote.author}</span>
-                  <span className="author-role">{currentStory.quote.role}</span>
-                </div>
-              </div>
             </motion.div>
           </AnimatePresence>
         </div>
       </section>
 
-      {/* ─── Bottom CTA ───────────────────────────────────────────────────── */}
-      <section className="inner-cta-banner">
-        <div className="container text-center">
-          <ScrollTypographyReveal
-            text="Ready to write your growth story?"
-            tag="h2"
-            className="inner-cta-title"
-            theme="light"
-            start="top 90%"
-            end="top 60%"
-            scrub={0.4}
-          />
-          <p className="inner-cta-subtext">
-            Let's discuss how UXHub can help you validate ideas, optimize conversion rates, and engineer scalable systems.
-          </p>
-          <div className="inner-cta-actions">
-            <button className="cta-primary-pill" onClick={() => onNavigate('contact')}>
-              Start a Conversation
-            </button>
-            <button className="cta-secondary-pill" onClick={() => onNavigate('services')}>
-              Explore Services & Engagement Models →
-            </button>
+      {/* ─── 4. ALL FEATURED STORIES 4-CARD MATRIX (WHITE) ───────────────── */}
+      <section className="stories-matrix-section">
+        <div className="container">
+          <div className="stories-matrix-header">
+            <ScrollTypographyReveal
+              text="All Featured Stories"
+              tag="h2"
+              className="stories-matrix-title"
+              theme="light"
+              fromColor="#D1D5DB"
+              toColor="#000000"
+              fromOpacity={0.35}
+              toOpacity={1}
+              start="top 85%"
+              end="bottom 50%"
+              scrub={0.8}
+            />
+            <ScrollTypographyReveal
+              text="Verified growth case studies across 0→1 incubation, D2C scale, enterprise platforms, and pricing intelligence."
+              tag="p"
+              className="stories-matrix-sub"
+              theme="light"
+              fromColor="#D1D5DB"
+              toColor="#6B7280"
+              fromOpacity={0.35}
+              toOpacity={1}
+              stagger={0.025}
+              start="top 80%"
+              end="bottom 45%"
+              scrub={0.8}
+            />
+          </div>
+
+          <div className="stories-matrix-grid">
+            {detailedStories.map((story, idx) => {
+              const CardIcon = story.iconComponent;
+              const isCurrent = selectedStory === story.id;
+              return (
+                <motion.div
+                  key={story.id}
+                  className={`story-box-card ${isCurrent ? 'is-selected' : ''}`}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6, delay: idx * 0.08, ease: springEase }}
+                  whileHover={{ y: -6 }}
+                  onClick={() => scrollToSpotlight(story.id)}
+                >
+                  <div className="story-box-icon-box">
+                    <CardIcon size={34} color="#000000" />
+                  </div>
+                  <h3 className="story-box-title">{story.title}</h3>
+                  <p className="story-box-desc">{story.tagline}</p>
+                  <div className="story-box-footer">
+                    <span className="story-box-market">{story.market}</span>
+                    <div className="story-box-arrow">
+                      <VectorArrowRight width={16} height={14} color="currentColor" />
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ─── Cross Navigation Banner (Connecting to Other Divisions) ─────── */}
-      <CrossNavBanner current="stories" onNavigate={onNavigate} theme="light" />
+      {/* ─── 5. READY TO BUILD WHAT'S NEXT SECTION (WHITE, CENTERED) ─────── */}
+      <section className="services-ready-section">
+        <div className="container">
+          <div className="services-ready-content">
+            <ScrollTypographyReveal
+              text="Ready to build what's next?"
+              tag="h2"
+              className="services-ready-heading"
+              theme="light"
+              fromColor="#D1D5DB"
+              toColor="#000000"
+              fromOpacity={0.35}
+              toOpacity={1}
+              start="top 85%"
+              end="bottom 50%"
+              scrub={0.8}
+            />
+
+            <ScrollTypographyReveal
+              text="Tell us what you're trying to build, launch or grow."
+              tag="p"
+              className="services-ready-subhead"
+              theme="light"
+              fromColor="#D1D5DB"
+              toColor="#6B7280"
+              fromOpacity={0.35}
+              toOpacity={1}
+              stagger={0.03}
+              start="top 80%"
+              end="bottom 45%"
+              scrub={0.8}
+            />
+
+            <button 
+              className="services-conversation-btn"
+              onClick={() => (onOpenContact ? onOpenContact() : onNavigate('contact'))}
+            >
+              <span className="conversation-arrow">
+                <DiagonalArrowIcon size={16} color="currentColor" />
+              </span>
+              <span>Start a Conversation</span>
+            </button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
-
