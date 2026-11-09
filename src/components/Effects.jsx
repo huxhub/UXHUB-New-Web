@@ -18,11 +18,12 @@ export default function Effects({ kind, className }) {
       ({ createHero, createSwirl, swirlAt }) => {
         if (disposed) return;
         try {
+          const isPartners = className?.includes("partners-swirl-canvas");
           const ready = () => {
             if (!canvas) return;
             canvas.dataset.active = "true";
             canvas.dataset.ready = "true";
-            canvas.style.opacity = "1";
+            canvas.style.opacity = isPartners ? "0.36" : "1";
             canvas.parentElement
               ?.querySelector("svg")
               ?.classList.add("effect-fallback-hidden");
@@ -85,12 +86,20 @@ export default function Effects({ kind, className }) {
               if (disposed) return;
               const delta = Math.min((time - last) / 1000, 0.1);
               last = time;
-              current += (target - current) * (1 - Math.exp(-delta * 3));
+              current += (target - current) * (1 - Math.exp(-delta * (isPartners ? 1.8 : 3)));
               
               if (Math.abs(target - current) < 0.0001) current = target;
               
               if (renderer && swirlAt) {
-                renderer.setParams(swirlAt(current));
+                const params = swirlAt(current);
+                if (isPartners) {
+                  // Gently soften the swirl animation speed and dynamics for the partners section
+                  params.speed = (params.speed ?? 0) * 0.35;
+                  params.twist = (params.twist ?? 0) * 0.6;
+                  params.stripeFlow = (params.stripeFlow ?? 0.5) * 0.45;
+                  params.radialSpin = (params.radialSpin ?? -0.3) * 0.45;
+                }
+                renderer.setParams(params);
               }
               frame = current !== target ? requestAnimationFrame(animate) : 0;
             };
@@ -123,7 +132,7 @@ export default function Effects({ kind, className }) {
                 const totalTravel = rect.height + vh;
                 const currentTravel = vh - rect.top;
                 const progress = Math.max(0, Math.min(1, currentTravel / totalTravel));
-                target = progress * 4;
+                target = isPartners ? progress * 1.5 : progress * 4;
               }
 
               if (!frame) {
