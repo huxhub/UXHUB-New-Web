@@ -304,18 +304,18 @@ export default function HomePage({ onOpenContact, onNavigate }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -6 }}
+              whileHover={{ y: -8 }}
               onClick={() => onNavigate('services')}
             >
               <div className="service-icon-box">
-                <ArchIcon size={84} color="#ffffff" />
+                <ArchIcon size={84} color="currentColor" />
               </div>
               <h3 className="service-title">Product Growth</h3>
               <p className="service-desc">
                 From 0→1 to scalable growth. Identify opportunities, validate ideas and take digital products from concept to market and beyond.
               </p>
               <div className="service-arrow-wrap">
-                <VectorArrowRight width={18} height={16} />
+                <VectorArrowRight width={18} height={16} color="currentColor" />
               </div>
             </motion.div>
 
@@ -325,18 +325,18 @@ export default function HomePage({ onOpenContact, onNavigate }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -6 }}
+              whileHover={{ y: -8 }}
               onClick={() => onNavigate('services')}
             >
               <div className="service-icon-box">
-                <WedgeIcon size={84} color="#ffffff" />
+                <WedgeIcon size={84} color="currentColor" />
               </div>
               <h3 className="service-title">E-commerce Growth D2C</h3>
               <p className="service-desc">
                 Build, optimize and scale e-commerce businesses across D2C and marketplace channels.
               </p>
               <div className="service-arrow-wrap">
-                <VectorArrowRight width={18} height={16} />
+                <VectorArrowRight width={18} height={16} color="currentColor" />
               </div>
             </motion.div>
 
@@ -346,18 +346,18 @@ export default function HomePage({ onOpenContact, onNavigate }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -6 }}
+              whileHover={{ y: -8 }}
               onClick={() => onNavigate('services')}
             >
               <div className="service-icon-box">
-                <HourglassIcon size={84} color="#ffffff" />
+                <HourglassIcon size={84} color="currentColor" />
               </div>
               <h3 className="service-title">Digital Experience</h3>
               <p className="service-desc">
                 Custom software and premium digital experiences that combine brand, technology, usability and conversion.
               </p>
               <div className="service-arrow-wrap">
-                <VectorArrowRight width={18} height={16} />
+                <VectorArrowRight width={18} height={16} color="currentColor" />
               </div>
             </motion.div>
           </div>
@@ -413,12 +413,6 @@ export default function HomePage({ onOpenContact, onNavigate }) {
               </motion.div>
             ))}
           </div>
-
-          <div className="tech-cta-wrapper text-center mt-4">
-            <button className="cta-secondary-pill-dark" onClick={() => onNavigate('services')}>
-              Explore Our Services & Solutions →
-            </button>
-          </div>
         </div>
       </section>
 
@@ -426,10 +420,33 @@ export default function HomePage({ onOpenContact, onNavigate }) {
       <section id="stories" className="light-section stories-section">
         <div className="container observe-reveal">
           <div className="stories-header">
-            <h2 className="stories-main-title">Featured Stories</h2>
-            <p className="stories-subhead">
-              Discover authentic experiences, straight from those we serve.
-            </p>
+            <ScrollTypographyReveal
+              text="Featured Stories"
+              tag="h2"
+              className="stories-main-title"
+              theme="light"
+              fromColor="#D1D5DB"
+              toColor="#000000"
+              fromOpacity={0.35}
+              toOpacity={1}
+              start="top 85%"
+              end="bottom 50%"
+              scrub={0.8}
+            />
+            <ScrollTypographyReveal
+              text="Discover authentic experiences, straight from those we serve."
+              tag="p"
+              className="stories-subhead"
+              theme="light"
+              fromColor="#D1D5DB"
+              toColor="#71717a"
+              fromOpacity={0.35}
+              toOpacity={1}
+              stagger={0.03}
+              start="top 85%"
+              end="bottom 50%"
+              scrub={0.8}
+            />
           </div>
 
           <div className="stories-carousel-wrapper">
@@ -456,7 +473,6 @@ export default function HomePage({ onOpenContact, onNavigate }) {
                     <div 
                       key={isResponsive ? storyIndex : idx} 
                       className="story-card"
-                      onClick={() => onNavigate('stories')}
                     >
                       <div className="story-icon-wrapper">
                         <KareonHexIcon size={76} color="#000000" />

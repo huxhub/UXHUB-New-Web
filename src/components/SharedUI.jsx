@@ -492,13 +492,6 @@ export const CrossNavBanner = ({ current, onNavigate, theme = "auto" }) => {
       badge: 'Services'
     },
     { 
-      id: 'stories', 
-      title: 'Featured Stories', 
-      tagline: 'Verified Growth Outcomes', 
-      desc: 'Real case studies: +320% GMV, 4.8x conversion rates, and 99.99% edge uptime.',
-      badge: 'Outcomes'
-    },
-    { 
       id: 'contact', 
       title: 'Contact', 
       tagline: 'Regional Studios & Inquiries', 

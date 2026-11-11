@@ -198,22 +198,6 @@ export default function ContactPage({ onNavigate }) {
                   </div>
                 ))}
               </div>
-
-              {/* Trust & Compliance Protocol */}
-              <div className="compliance-strip">
-                <div className="compliance-item">
-                  <span className="compliance-dot" />
-                  <span>Bilateral NDA Executed</span>
-                </div>
-                <div className="compliance-item">
-                  <span className="compliance-dot" />
-                  <span>INR · SAR · AED Invoicing</span>
-                </div>
-                <div className="compliance-item">
-                  <span className="compliance-dot" />
-                  <span>100% IP & Code Ownership</span>
-                </div>
-              </div>
             </motion.div>
 
             {/* Right Column: Premium Minimalist Form */}

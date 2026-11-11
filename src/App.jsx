@@ -13,6 +13,8 @@ import {
 
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
+import ProductPage from './pages/ProductPage';
+import AboutPage from './pages/AboutPage';
 import StoriesPage from './pages/StoriesPage';
 import ContactPage from './pages/ContactPage';
 
@@ -22,20 +24,20 @@ gsap.registerPlugin(ScrollTrigger);
 export const NAV_LINKS = [
   { id: 'home', label: 'Home', path: '#/' },
   { id: 'services', label: 'Services', path: '#/services' },
-  { id: 'stories', label: 'Featured Stories', path: '#/stories' },
+  { id: 'about', label: 'About', path: '#/about' },
   { id: 'contact', label: 'Contact', path: '#/contact' }
 ];
 
 export const resolvePageFromHash = (hash) => {
   const clean = (hash || '').replace(/^#\/?/, '').toLowerCase().trim();
-  if (['services', 'stories', 'contact'].includes(clean)) {
+  if (['services', 'about', 'contact'].includes(clean)) {
     return clean;
+  }
+  if (clean === 'about-us' || clean === 'aboutus') {
+    return 'about';
   }
   if (clean === 'capabilities') {
     return 'services';
-  }
-  if (clean === 'featured-stories' || clean === 'featuredstories') {
-    return 'stories';
   }
   return 'home';
 };
@@ -198,11 +200,16 @@ export default function App() {
         return;
       }
 
-      // Local hash like #services, #stories, #contact
+      // Local hash like #services, #about, #contact
       const clean = href.replace(/^#/, '').toLowerCase();
-      if (['services', 'stories', 'contact', 'home'].includes(clean)) {
+      if (['services', 'about', 'contact', 'home'].includes(clean)) {
         e.preventDefault();
         navigate(clean);
+        return;
+      }
+      if (clean === 'about-us' || clean === 'aboutus') {
+        e.preventDefault();
+        navigate('about');
         return;
       }
       if (clean === 'capabilities') {
@@ -287,7 +294,7 @@ export default function App() {
       />
 
       {/* ─── Global Header ─────────────────────────────────────────────────── */}
-      <header className={`site-header ${currentPage !== 'home' ? 'site-header--inner' : ''}`}>
+      <header className={`site-header ${currentPage !== 'home' && currentPage !== 'about' ? 'site-header--inner' : ''}`}>
         <div className="header-inner">
           <UXHubLogo onClick={() => navigate('home')} />
 
@@ -311,6 +318,18 @@ export default function App() {
         )}
         {currentPage === 'services' && (
           <ServicesPage 
+            onOpenContact={() => navigate('contact')} 
+            onNavigate={navigate} 
+          />
+        )}
+        {currentPage === 'product' && (
+          <ProductPage 
+            onOpenContact={() => navigate('contact')} 
+            onNavigate={navigate} 
+          />
+        )}
+        {currentPage === 'about' && (
+          <AboutPage 
             onOpenContact={() => navigate('contact')} 
             onNavigate={navigate} 
           />
@@ -359,11 +378,11 @@ export default function App() {
               </li>
               <li>
                 <a 
-                  href="#/stories" 
-                  className={`footer-nav-item-btn ${currentPage === 'stories' ? 'active-footer-link' : ''}`} 
-                  onClick={(e) => { e.preventDefault(); navigate('stories'); }}
+                  href="#/about" 
+                  className={`footer-nav-item-btn ${currentPage === 'about' ? 'active-footer-link' : ''}`} 
+                  onClick={(e) => { e.preventDefault(); navigate('about'); }}
                 >
-                  Featured Stories
+                  About
                 </a>
               </li>
               <li>

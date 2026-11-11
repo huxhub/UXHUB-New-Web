@@ -204,7 +204,7 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
 
       {/* ─── 4. PRACTICE SPOTLIGHT: DIGITAL EXPERIENCE ─────────────────── */}
       <section className="services-practice-section">
-        <div className="container">
+        <div className="container services-practice-container">
           <div className="services-practice-grid">
             {/* Left Column: Heading, Description & Action */}
             <motion.div 
@@ -214,11 +214,6 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, ease: springEase }}
             >
-              <div className="services-practice-badge">
-                <span className="practice-badge-dot" aria-hidden="true" />
-                <span className="practice-badge-text">PRACTICE 03 — DIGITAL EXPERIENCE</span>
-              </div>
-
               <ScrollTypographyReveal
                 lines={[
                   "Digital experiences",
@@ -292,19 +287,6 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
                   </div>
                 ))}
               </div>
-
-              {/* Bottom Process Card: BRAND ───●─── EXPERIENCE ───●─── GROWTH */}
-              <div className="practice-process-card">
-                <span className="process-node">BRAND</span>
-                <div className="process-connector">
-                  <span className="process-dot" />
-                </div>
-                <span className="process-node">EXPERIENCE</span>
-                <div className="process-connector">
-                  <span className="process-dot" />
-                </div>
-                <span className="process-node">GROWTH</span>
-              </div>
             </motion.div>
           </div>
         </div>
@@ -334,7 +316,7 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
               className="services-ready-subhead"
               theme="light"
               fromColor="#D1D5DB"
-              toColor="#6B7280"
+              toColor="#71717a"
               fromOpacity={0.35}
               toOpacity={1}
               stagger={0.03}
@@ -346,9 +328,10 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
             <button 
               className="services-conversation-btn"
               onClick={() => onNavigate('contact')}
+              aria-label="Start a Conversation"
             >
               <span className="conversation-arrow">
-                <DiagonalArrowIcon size={16} color="currentColor" />
+                <DiagonalArrowIcon size={20} color="currentColor" />
               </span>
               <span>Start a Conversation</span>
             </button>
