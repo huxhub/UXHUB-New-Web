@@ -12,15 +12,15 @@ import ScrollTypographyReveal from '../components/ScrollTypographyReveal';
 const springEase = [0.16, 1, 0.3, 1];
 
 export default function ContactPage({ onNavigate }) {
-  const [selectedServices, setSelectedServices] = useState(['Product Growth']);
-  const [selectedMarket, setSelectedMarket] = useState('India ↔ KSA');
   const [submitted, setSubmitted] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
+    company: '',
     email: '',
     phone: '',
-    company: '',
+    country: '',
+    scope: '',
     message: ''
   });
 
@@ -80,10 +80,6 @@ export default function ContactPage({ onNavigate }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: springEase }}
           >
-            <div className="contact-hero-kicker">
-              <BrandCross size={16} color="#FF7723" strokeWidth={3} className="hero-kicker-cross" />
-              <span>START A CONVERSATION</span>
-            </div>
             <h1 className="contact-hero-black-title">
               {"Let's build what's next.".split(' ').map((word, wIdx, arr) => (
                 <span key={wIdx} className="hero-word">
@@ -223,7 +219,7 @@ export default function ContactPage({ onNavigate }) {
                       className="success-reset-btn"
                       onClick={() => {
                         setSubmitted(false);
-                        setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+                        setFormData({ name: '', company: '', email: '', phone: '', country: '', scope: '', message: '' });
                       }}
                     >
                       <span>Send Another Inquiry</span>
@@ -233,121 +229,120 @@ export default function ContactPage({ onNavigate }) {
                 ) : (
                   <form onSubmit={handleSubmit} className="minimal-inquiry-form">
                     
-                    {/* Capability Selector */}
-                    <div className="form-group-block">
-                      <label className="minimal-field-label">
-                        Capabilities of interest
-                      </label>
-                      <div className="minimal-chips-grid">
-                        {[
-                          'Product Growth (0→1)',
-                          'E-commerce & D2C Scale',
-                          'Digital Experience Platform',
-                          'Pricing Intelligence Software'
-                        ].map(svc => {
-                          const isSelected = selectedServices.includes(svc);
-                          return (
-                            <button
-                              type="button"
-                              key={svc}
-                              className={`minimal-chip ${isSelected ? 'is-selected' : ''}`}
-                              onClick={() => toggleService(svc)}
-                            >
-                              <span>{svc}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Target Market Selector */}
-                    <div className="form-group-block">
-                      <label className="minimal-field-label">
-                        Primary Target Market
-                      </label>
-                      <div className="minimal-chips-grid minimal-chips-grid--market">
-                        {[
-                          'India',
-                          'Saudi Arabia (KSA)',
-                          'India ↔ KSA',
-                          'UAE & GCC'
-                        ].map(market => {
-                          const isSelected = selectedMarket === market;
-                          return (
-                            <button
-                              type="button"
-                              key={market}
-                              className={`minimal-chip ${isSelected ? 'is-selected' : ''}`}
-                              onClick={() => setSelectedMarket(market)}
-                            >
-                              <span>{market}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Form Inputs Grid */}
-                    <div className="minimal-fields-grid">
-                      <div className="minimal-input-wrap">
-                        <label className="minimal-field-label">Your Name *</label>
+                    {/* Row 1: Name & Company */}
+                    <div className="minimal-row-2col">
+                      <div className="minimal-field-group">
+                        <label className="minimal-field-label" htmlFor="contact-name">NAME</label>
                         <input 
+                          id="contact-name"
                           type="text" 
                           required 
-                          placeholder="e.g. Rahul Sharma" 
+                          placeholder="Your full name" 
                           value={formData.name}
                           onChange={e => setFormData({ ...formData, name: e.target.value })}
+                          className="minimal-line-input"
                         />
                       </div>
 
-                      <div className="minimal-input-wrap">
-                        <label className="minimal-field-label">Work Email *</label>
+                      <div className="minimal-field-group">
+                        <label className="minimal-field-label" htmlFor="contact-company">COMPANY</label>
                         <input 
-                          type="email" 
-                          required 
-                          placeholder="rahul@brand.com" 
-                          value={formData.email}
-                          onChange={e => setFormData({ ...formData, email: e.target.value })}
-                        />
-                      </div>
-
-                      <div className="minimal-input-wrap">
-                        <label className="minimal-field-label">Phone / WhatsApp</label>
-                        <input 
-                          type="tel" 
-                          placeholder="+91 / +966 / +971 ..." 
-                          value={formData.phone}
-                          onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                        />
-                      </div>
-
-                      <div className="minimal-input-wrap">
-                        <label className="minimal-field-label">Company / Brand</label>
-                        <input 
+                          id="contact-company"
                           type="text" 
-                          placeholder="Acme Retail & Tech Ltd" 
+                          placeholder="Company or organization" 
                           value={formData.company}
                           onChange={e => setFormData({ ...formData, company: e.target.value })}
+                          className="minimal-line-input"
                         />
                       </div>
                     </div>
 
-                    {/* Message Area */}
-                    <div className="minimal-input-wrap mt-field">
-                      <label className="minimal-field-label">Project Scope & Objectives</label>
+                    {/* Row 2: Work Email & Phone */}
+                    <div className="minimal-row-2col">
+                      <div className="minimal-field-group">
+                        <label className="minimal-field-label" htmlFor="contact-email">WORK EMAIL</label>
+                        <input 
+                          id="contact-email"
+                          type="email" 
+                          required 
+                          placeholder="name@company.com" 
+                          value={formData.email}
+                          onChange={e => setFormData({ ...formData, email: e.target.value })}
+                          className="minimal-line-input"
+                        />
+                      </div>
+
+                      <div className="minimal-field-group">
+                        <label className="minimal-field-label" htmlFor="contact-phone">PHONE</label>
+                        <input 
+                          id="contact-phone"
+                          type="tel" 
+                          placeholder="+91 / +966 number" 
+                          value={formData.phone}
+                          onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                          className="minimal-line-input"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Row 3: Country / Location */}
+                    <div className="minimal-field-group">
+                      <label className="minimal-field-label" htmlFor="contact-country">COUNTRY / LOCATION</label>
+                      <input 
+                        id="contact-country"
+                        type="text" 
+                        placeholder="India, Saudi Arabia, UAE, Global..." 
+                        value={formData.country}
+                        onChange={e => setFormData({ ...formData, country: e.target.value })}
+                        className="minimal-line-input"
+                      />
+                    </div>
+
+                    {/* Row 4: Requirement Scope */}
+                    <div className="minimal-field-group">
+                      <label className="minimal-field-label" htmlFor="contact-scope">REQUIREMENT SCOPE</label>
+                      <div className="minimal-select-wrap">
+                        <select 
+                          id="contact-scope"
+                          value={formData.scope}
+                          onChange={e => setFormData({ ...formData, scope: e.target.value })}
+                          className={`minimal-line-select ${!formData.scope ? 'is-placeholder' : ''}`}
+                        >
+                          <option value="" disabled>Select practice / requirement</option>
+                          <option value="Product Growth (0→1)">Product Growth (0→1)</option>
+                          <option value="E-commerce Growth D2C">E-commerce Growth D2C</option>
+                          <option value="Digital Experience Platform">Digital Experience Platform</option>
+                          <option value="Technology & Architecture">Technology & Architecture</option>
+                          <option value="Marketplace Growth">Marketplace Growth</option>
+                          <option value="Cross-Border India ↔ GCC">Cross-Border India ↔ GCC</option>
+                          <option value="Other / Custom Advisory">Other / Custom Advisory</option>
+                        </select>
+                        <span className="minimal-select-chevron" aria-hidden="true">
+                          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 1.5L6 6.5L11 1.5" stroke="#111113" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Row 5: Project Brief */}
+                    <div className="minimal-field-group">
+                      <label className="minimal-field-label" htmlFor="contact-brief">PROJECT BRIEF</label>
                       <textarea 
-                        rows={4}
-                        placeholder="Share your timeline, current software architecture, or growth milestones..."
+                        id="contact-brief"
+                        rows={3}
+                        placeholder="Share the opportunity, challenge, timeline or growth targets." 
                         value={formData.message}
                         onChange={e => setFormData({ ...formData, message: e.target.value })}
+                        className="minimal-line-textarea"
                       />
                     </div>
 
                     {/* Submit Action */}
                     <button type="submit" className="minimal-submit-btn">
-                      <span>Submit Project Inquiry</span>
+                      <span>Submit Inquiry</span>
                       <span className="submit-arrow-circle">
-                        <DiagonalArrowIcon size={15} color="currentColor" />
+                        <DiagonalArrowIcon size={14} color="currentColor" />
                       </span>
                     </button>
                   </form>

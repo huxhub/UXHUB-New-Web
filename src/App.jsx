@@ -24,13 +24,14 @@ gsap.registerPlugin(ScrollTrigger);
 export const NAV_LINKS = [
   { id: 'home', label: 'Home', path: '#/' },
   { id: 'services', label: 'Services', path: '#/services' },
+  { id: 'product', label: 'Product', path: '#/product' },
   { id: 'about', label: 'About', path: '#/about' },
   { id: 'contact', label: 'Contact', path: '#/contact' }
 ];
 
 export const resolvePageFromHash = (hash) => {
   const clean = (hash || '').replace(/^#\/?/, '').toLowerCase().trim();
-  if (['services', 'about', 'contact'].includes(clean)) {
+  if (['services', 'product', 'about', 'contact'].includes(clean)) {
     return clean;
   }
   if (clean === 'about-us' || clean === 'aboutus') {
@@ -38,6 +39,9 @@ export const resolvePageFromHash = (hash) => {
   }
   if (clean === 'capabilities') {
     return 'services';
+  }
+  if (clean === 'price-intelligence' || clean === 'pricing') {
+    return 'product';
   }
   return 'home';
 };
@@ -200,9 +204,9 @@ export default function App() {
         return;
       }
 
-      // Local hash like #services, #about, #contact
+      // Local hash like #services, #product, #about, #contact
       const clean = href.replace(/^#/, '').toLowerCase();
-      if (['services', 'about', 'contact', 'home'].includes(clean)) {
+      if (['services', 'product', 'about', 'contact', 'home'].includes(clean)) {
         e.preventDefault();
         navigate(clean);
         return;
@@ -374,6 +378,15 @@ export default function App() {
                   onClick={(e) => { e.preventDefault(); navigate('services'); }}
                 >
                   Services
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#/product" 
+                  className={`footer-nav-item-btn ${currentPage === 'product' ? 'active-footer-link' : ''}`} 
+                  onClick={(e) => { e.preventDefault(); navigate('product'); }}
+                >
+                  Product
                 </a>
               </li>
               <li>

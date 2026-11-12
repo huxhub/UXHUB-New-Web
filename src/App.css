@@ -140,6 +140,7 @@ button {
 .brand-logo--dark,
 .site-header--dark .brand-logo,
 .page-services .site-header .brand-logo,
+.page-product .site-header .brand-logo,
 .page-stories .site-header .brand-logo,
 .page-contact .site-header .brand-logo {
   color: #ffffff;
@@ -216,6 +217,7 @@ button {
 
 .site-header--dark .menu-button,
 .page-services .site-header .menu-button,
+.page-product .site-header .menu-button,
 .page-stories .site-header .menu-button,
 .page-contact .site-header .menu-button {
   color: #ffffff;
@@ -2721,6 +2723,7 @@ button {
 }
 
 .page-services .site-header--inner,
+.page-product .site-header--inner,
 .page-stories .site-header--inner,
 .page-contact .site-header--inner {
   position: absolute;
@@ -2737,6 +2740,9 @@ button {
 .page-services .site-header--inner .logo-ux,
 .page-services .site-header--inner .menu-button,
 .page-services .site-header--inner .crumb-current,
+.page-product .site-header--inner .logo-ux,
+.page-product .site-header--inner .menu-button,
+.page-product .site-header--inner .crumb-current,
 .page-stories .site-header--inner .logo-ux,
 .page-stories .site-header--inner .menu-button,
 .page-stories .site-header--inner .crumb-current,
@@ -2747,6 +2753,7 @@ button {
 }
 
 .page-services .site-header--inner .brand-logo,
+.page-product .site-header--inner .brand-logo,
 .page-stories .site-header--inner .brand-logo,
 .page-contact .site-header--inner .brand-logo {
   color: #ffffff;
@@ -4970,18 +4977,6 @@ button {
   max-width: 840px;
 }
 
-.contact-hero-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: #FF7723;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-}
 
 .contact-hero-black-title {
   font-family: var(--font-display);
@@ -5185,121 +5180,124 @@ button {
 
 
 
-/* Right Column: Premium Minimalist Form */
+/* Right Column: Premium Minimalist Form (Matching Mockup Architecture) */
 .minimal-form-box {
   background: #ffffff;
   border: 1px solid #e4e4e7;
-  border-radius: 16px;
-  padding: clamp(2rem, 3.5vw, 3rem);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border-radius: 0;
+  padding: clamp(2rem, 3.8vw, 3.25rem);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
 }
 
 .minimal-inquiry-form {
   display: flex;
   flex-direction: column;
-  gap: 1.65rem;
+  gap: 2.1rem;
 }
 
-.form-group-block {
+.minimal-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.minimal-field-group {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  position: relative;
 }
 
 .minimal-field-label {
   display: block;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 550;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #71717a;
-  margin-bottom: 0.4rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
 }
 
-.minimal-chips-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.6rem;
-}
-
-.minimal-chips-grid--market {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.minimal-chip {
-  background: #fafafa;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  padding: 0.65rem 0.95rem;
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  font-weight: 450;
-  color: #3f3f46;
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.2s ease;
-}
-
-.minimal-chip:hover {
-  background: #f4f4f5;
-  border-color: #d4d4d8;
-  color: #000000;
-}
-
-.minimal-chip.is-selected {
-  background: #000000;
-  border-color: #000000;
-  color: #ffffff;
-  font-weight: 500;
-}
-
-.minimal-fields-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.15rem;
-}
-
-.minimal-input-wrap {
-  display: flex;
-  flex-direction: column;
-}
-
-.minimal-input-wrap.mt-field {
-  margin-top: 0.25rem;
-}
-
-.minimal-input-wrap input,
-.minimal-input-wrap textarea {
+.minimal-line-input,
+.minimal-line-select,
+.minimal-line-textarea {
   width: 100%;
   box-sizing: border-box;
-  background: #fafafa;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  padding: 0.75rem 0.95rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 0;
+  padding: 0.4rem 0 0.85rem;
   font-family: var(--font-body);
-  font-size: 0.88rem;
-  color: #000000;
-  transition: all 0.2s ease;
+  font-size: 0.98rem;
+  font-weight: 350;
+  color: #0f172a;
   outline: none;
+  transition: border-color 0.25s ease;
 }
 
-.minimal-input-wrap input::placeholder,
-.minimal-input-wrap textarea::placeholder {
-  color: #a1a1aa;
+.minimal-line-input::placeholder,
+.minimal-line-textarea::placeholder {
+  color: #94a3b8;
+  font-weight: 300;
+  opacity: 1;
+}
+
+.minimal-line-input:focus,
+.minimal-line-select:focus,
+.minimal-line-textarea:focus {
+  border-bottom-color: #000000;
+}
+
+.minimal-select-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.minimal-line-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding-right: 2rem;
+  background-color: transparent;
+}
+
+.minimal-line-select.is-placeholder {
+  color: #94a3b8;
   font-weight: 300;
 }
 
-.minimal-input-wrap input:focus,
-.minimal-input-wrap textarea:focus {
+.minimal-line-select option {
   background: #ffffff;
-  border-color: #000000;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+  color: #0f172a;
+  padding: 0.5rem;
 }
 
-.minimal-input-wrap textarea {
+.minimal-select-chevron {
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f172a;
+  transition: transform 0.2s ease;
+}
+
+.minimal-line-select:focus + .minimal-select-chevron {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.minimal-line-textarea {
   resize: vertical;
-  min-height: 105px;
+  min-height: 80px;
+  line-height: 1.6;
 }
 
 .minimal-submit-btn {
@@ -5307,13 +5305,13 @@ button {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 0.95rem 1.35rem;
+  padding: 1.05rem 1.6rem;
   background: #000000;
   border: 1px solid #000000;
-  border-radius: 10px;
+  border-radius: 0;
   color: #ffffff;
   font-family: var(--font-body);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -5323,18 +5321,26 @@ button {
 .minimal-submit-btn:hover {
   background: #18181b;
   border-color: #18181b;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .submit-arrow-circle {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: #ffffff;
   color: #000000;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.minimal-submit-btn:hover .submit-arrow-circle {
+  transform: translateX(3px) translateY(-1px);
+  background: #FF7723;
+  color: #ffffff;
 }
 
 /* Success Confirmation State */
@@ -6452,13 +6458,6 @@ html:has(.page-capabilities) { scroll-behavior: smooth; }
     align-items: center;
     text-align: center;
   }
-  .contact-hero-kicker {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.25rem;
-    text-align: center;
-  }
   .contact-hero-black-title {
     font-size: clamp(2rem, 7.5vw, 2.75rem);
     text-align: center;
@@ -6483,15 +6482,14 @@ html:has(.page-capabilities) { scroll-behavior: smooth; }
     gap: 3rem;
   }
   .minimal-form-box {
-    padding: 1.85rem 1.35rem;
+    padding: 2rem 1.35rem;
   }
-  .minimal-chips-grid,
-  .minimal-chips-grid--market {
+  .minimal-row-2col {
     grid-template-columns: 1fr;
+    gap: 1.85rem;
   }
-  .minimal-fields-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .minimal-inquiry-form {
+    gap: 1.85rem;
   }
 
   /* Cross Navigation */
@@ -6664,19 +6662,6 @@ html:has(.page-capabilities) { scroll-behavior: smooth; }
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-}
-
-/* ─── Minimal Smooth Scroll Progress Bar ─────────────────────────────── */
-.about-scroll-progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2.5px;
-  background: #FF7723;
-  transform-origin: 0%;
-  z-index: 9999;
-  pointer-events: none;
 }
 
 /* ─── 1. Minimal Hero Section (WHITE) ────────────────────────────────────── */
@@ -7212,5 +7197,1101 @@ html:has(.page-capabilities) { scroll-behavior: smooth; }
   .services-ready-subhead {
     font-size: 0.95rem;
     margin-bottom: 2rem;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UXHUB PRICING SUPER INTELLIGENCE // PRODUCT PAGE REDESIGN
+   Editorial Minimalist Luxury Design System (Black & White Alternating)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.product-page {
+  background: #09090b;
+  color: #ffffff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ─── 1. HERO SECTION (SOLID BLACK / LUXURY METALLIC) ────────────────────── */
+.product-hero-black {
+  position: relative;
+  background: #09090b;
+  color: #ffffff;
+  padding: clamp(7.5rem, 13vh, 10.5rem) 0 clamp(4.5rem, 8vh, 6.5rem);
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.product-hero-swirl-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+.product-hero-container {
+  position: relative;
+  z-index: 1;
+}
+
+.product-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.15fr);
+  gap: clamp(2.5rem, 4.5vw, 4.5rem);
+  align-items: center;
+}
+
+.product-hero-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.35rem, 4.2vw, 4.1rem);
+  font-weight: 350;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin: 0 0 1.65rem;
+}
+
+.product-hero-lead {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  font-weight: 300;
+  line-height: 1.68;
+  color: #a1a1aa;
+  margin: 0 0 2.25rem;
+  max-width: 580px;
+}
+
+.product-hero-cta-bar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.product-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.95rem 1.85rem;
+  background: #ffffff;
+  color: #09090b;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid #ffffff;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-btn-primary:hover {
+  background: #FF7723;
+  border-color: #FF7723;
+  color: #ffffff;
+}
+
+.product-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.95rem 1.85rem;
+  background: transparent;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-btn-secondary:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.product-hero-trust-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: #71717a;
+}
+
+.product-trust-divider {
+  color: #3f3f46;
+}
+
+/* ─── LIVE TELEMETRY TERMINAL COMPONENT ──────────────────────────────────── */
+.telemetry-terminal-box {
+  background: #0f0f13;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+
+.telemetry-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.15rem;
+  background: #18181d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.telemetry-window-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.telemetry-window-dots .window-dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 0;
+}
+
+.telemetry-terminal-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: #a1a1aa;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.telemetry-latency {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #71717a;
+}
+
+.telemetry-sku-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.3);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.telemetry-sku-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.telemetry-tab-btn {
+  padding: 0.75rem 1.15rem;
+  background: transparent;
+  border: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  color: #71717a;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  border-radius: 0;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.telemetry-tab-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.telemetry-tab-btn.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom: 2px solid #FF7723;
+}
+
+.telemetry-card-body {
+  padding: 1.5rem;
+}
+
+.telemetry-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.telemetry-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #71717a;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.35rem;
+}
+
+.telemetry-product-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 0.25rem;
+}
+
+.telemetry-category {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: #a1a1aa;
+}
+
+.telemetry-price-info {
+  text-align: right;
+}
+
+.telemetry-my-price {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.telemetry-status-pill {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  border-radius: 0;
+  margin-top: 0.35rem;
+  text-transform: uppercase;
+}
+
+.telemetry-status-pill.danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.telemetry-status-pill.success {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.telemetry-comp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.telemetry-comp-card {
+  padding: 0.85rem;
+  background: #141419;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+}
+
+.telemetry-comp-card.is-undercut {
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.comp-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.comp-platform {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #e4e4e7;
+}
+
+.comp-badge {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  padding: 0.1rem 0.35rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #a1a1aa;
+  border-radius: 0;
+}
+
+.comp-seller {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: #71717a;
+  margin-bottom: 0.5rem;
+}
+
+.comp-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.comp-price {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.comp-diff {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.comp-diff.down {
+  color: #ef4444;
+}
+
+.comp-diff.up {
+  color: #22c55e;
+}
+
+.comp-diff.same {
+  color: #71717a;
+}
+
+.telemetry-chart-container {
+  background: #141419;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+  border-radius: 0;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chart-title {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: #71717a;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+}
+
+.legend-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #a1a1aa;
+}
+
+.legend-line {
+  width: 14px;
+  height: 2px;
+}
+
+.line-you {
+  background: #ffffff;
+}
+
+.line-comp {
+  background: #FF7723;
+}
+
+.telemetry-svg {
+  width: 100%;
+  height: 95px;
+  display: block;
+}
+
+.chart-axis-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: #52525b;
+}
+
+.active-now {
+  color: #FF7723;
+  font-weight: 600;
+}
+
+.telemetry-alert-banner {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 119, 35, 0.08);
+  border-left: 3px solid #FF7723;
+  border-radius: 0;
+}
+
+.alert-badge-wrap {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.alert-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #FF7723;
+  background: rgba(255, 119, 35, 0.15);
+  padding: 0.2rem 0.45rem;
+  border-radius: 0;
+}
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-msg {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 0.35rem;
+}
+
+.alert-details {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  align-items: center;
+}
+
+.alert-shift {
+  color: #d4d4d8;
+  font-weight: 500;
+}
+
+.alert-diff {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.alert-action {
+  color: #a1a1aa;
+}
+
+/* ─── 2. MARKETPLACES COVERAGE (WHITE SECTION) ───────────────────────────── */
+.product-marketplaces-section {
+  padding: clamp(5rem, 9vh, 7.5rem) 0;
+  background: #ffffff;
+  color: #09090b;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.product-market-header {
+  max-width: 820px;
+  margin-bottom: clamp(2.5rem, 5vh, 3.8rem);
+}
+
+.product-market-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #09090b;
+  margin: 0 0 1.25rem;
+}
+
+.product-market-sub {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: #52525b;
+  margin: 0;
+}
+
+.product-market-pills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: clamp(3rem, 6vh, 4.5rem);
+}
+
+.product-market-pill-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.35rem;
+  background: #fbfbfa;
+  border: 1px solid #e4e4e7;
+  border-radius: 0;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.product-market-pill-card:hover {
+  border-color: #09090b;
+  transform: translateY(-2px);
+}
+
+.market-pill-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.5rem;
+  background: #09090b;
+  color: #ffffff;
+  border-radius: 0;
+}
+
+.market-pill-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #09090b;
+  margin-bottom: 0.15rem;
+}
+
+.market-pill-type {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: #71717a;
+}
+
+.product-metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid #e4e4e7;
+  padding-top: clamp(2rem, 4vh, 3rem);
+  gap: 1.5rem;
+}
+
+.product-metric-col {
+  border-left: 2px solid #09090b;
+  padding-left: 1.25rem;
+}
+
+.metric-number {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  font-weight: 400;
+  color: #09090b;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.35rem;
+}
+
+.metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: #71717a;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ─── 3. THE MARKET FRICTION & PROBLEM (BLACK SECTION) ───────────────────── */
+.product-problem-section {
+  padding: clamp(5.5rem, 10vh, 8.5rem) 0;
+  background: #09090b;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.product-section-header-dark {
+  max-width: 820px;
+  margin-bottom: clamp(3rem, 6vh, 4.5rem);
+}
+
+.product-section-h2-dark {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 350;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+  margin: 0 0 1.35rem;
+}
+
+.product-section-lead-dark {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #a1a1aa;
+  margin: 0;
+}
+
+.product-problem-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.problem-card {
+  padding: clamp(2rem, 3.5vw, 2.75rem);
+  background: #121217;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.25s ease;
+}
+
+.problem-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.problem-card-num {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #FF7723;
+  margin-bottom: 1.25rem;
+}
+
+.problem-card-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+}
+
+.problem-card-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: #a1a1aa;
+  margin: 0 0 1.75rem;
+  flex: 1;
+}
+
+.problem-card-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1rem;
+}
+
+.friction-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #71717a;
+  text-transform: uppercase;
+}
+
+/* ─── 4. THE 4-STAGE ARCHITECTURE ENGINE (WHITE SECTION) ─────────────────── */
+.product-engine-section {
+  padding: clamp(5.5rem, 10vh, 8.5rem) 0;
+  background: #ffffff;
+  color: #09090b;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.product-section-header-light {
+  max-width: 820px;
+  margin-bottom: clamp(3rem, 6vh, 4.5rem);
+}
+
+.product-section-h2-light {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: #09090b;
+  margin: 0 0 1.35rem;
+}
+
+.product-section-lead-light {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #52525b;
+  margin: 0;
+}
+
+.product-engine-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.engine-step-card {
+  padding: clamp(2rem, 3.5vw, 2.75rem);
+  background: #fbfbfa;
+  border: 1px solid #e4e4e7;
+  border-radius: 0;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.engine-step-card:hover {
+  border-color: #09090b;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.step-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #71717a;
+}
+
+.step-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #09090b;
+  background: #e4e4e7;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0;
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #09090b;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+}
+
+.step-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: #52525b;
+  margin: 0 0 1.75rem;
+}
+
+.step-specs-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border-top: 1px solid #e4e4e7;
+  padding-top: 1.25rem;
+}
+
+.spec-item {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #27272a;
+  font-weight: 500;
+}
+
+/* ─── 5. REGIONAL GCC CAPABILITIES (BLACK SECTION - 100VH FULL SCREEN) ──── */
+.product-gcc-section {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(4rem, 8vh, 6.5rem) 0;
+  background: #09090b;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.product-gcc-section .container {
+  width: 100%;
+}
+
+.product-gcc-features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.gcc-feature-card {
+  padding: 1.75rem;
+  background: #121217;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s ease;
+}
+
+.gcc-feature-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.gcc-feature-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 0.85rem;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+}
+
+.gcc-feature-desc {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #a1a1aa;
+  margin: 0;
+}
+
+/* ─── 6. ENTERPRISE USE CASES (WHITE SECTION) ────────────────────────────── */
+.product-usecases-section {
+  padding: clamp(5.5rem, 10vh, 8.5rem) 0;
+  background: #ffffff;
+  color: #09090b;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.product-usecases-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.usecase-card {
+  padding: 2rem 1.65rem;
+  background: #fbfbfa;
+  border: 1px solid #e4e4e7;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+}
+
+.usecase-card:hover {
+  border-color: #09090b;
+  background: #ffffff;
+}
+
+.usecase-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #71717a;
+  margin-bottom: 1.15rem;
+}
+
+.usecase-title {
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: #09090b;
+  margin: 0 0 0.85rem;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+
+.usecase-desc {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #52525b;
+  margin: 0 0 1.75rem;
+  flex: 1;
+}
+
+.usecase-metric {
+  border-top: 1px solid #e4e4e7;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.metric-val {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #09090b;
+}
+
+.metric-txt {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #71717a;
+  text-transform: uppercase;
+}
+
+/* ─── 7. FINAL LUXURY CTA (BLACK SECTION) ────────────────────────────────── */
+.product-cta-section {
+  padding: clamp(6rem, 11vh, 9rem) 0;
+  background: #09090b;
+  color: #ffffff;
+}
+
+.product-cta-box {
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem);
+  background: #111116;
+  border-radius: 0;
+}
+
+.product-cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.35rem, 4.5vw, 4rem);
+  font-weight: 350;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin: 1rem 0 1.5rem;
+}
+
+.product-cta-sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  font-weight: 300;
+  line-height: 1.68;
+  color: #a1a1aa;
+  margin: 0 auto 2.5rem;
+  max-width: 640px;
+}
+
+.product-cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.25rem;
+}
+
+.product-cta-guarantees {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: #71717a;
+}
+
+/* ─── PRODUCT PAGE RESPONSIVE MEDIA QUERIES ──────────────────────────────── */
+@media (max-width: 1200px) {
+  .product-gcc-features-grid,
+  .product-usecases-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .product-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .telemetry-terminal-box {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .product-metrics-strip {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-problem-cards-grid,
+  .product-engine-steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .telemetry-comp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-hero-cta-bar,
+  .product-cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .product-btn-primary,
+  .product-btn-secondary {
+    width: 100%;
+  }
+
+  .telemetry-price-info {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-gcc-features-grid,
+  .product-usecases-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-metrics-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .telemetry-card-body {
+    padding: 1rem;
+  }
+
+  .telemetry-meta-row {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .product-market-pills-grid {
+    grid-template-columns: 1fr;
   }
 }

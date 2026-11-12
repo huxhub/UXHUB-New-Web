@@ -69,20 +69,7 @@ function AnimatedCounter({ target, suffix = '', prefix = '', duration = 1600 }) 
 }
 
 export default function AboutPage({ onOpenContact, onNavigate }) {
-  const containerRef = useRef(null);
   const heroRef = useRef(null);
-
-  // Global scroll progress for about page
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
 
   // Hero section parallax & smooth fade out
   const { scrollYProgress: heroProgress } = useScroll({
@@ -193,14 +180,7 @@ export default function AboutPage({ onOpenContact, onNavigate }) {
   ];
 
   return (
-    <div ref={containerRef} className="inner-page about-page minimal-about">
-      {/* ── Minimalist Smooth Scroll Progress Bar ── */}
-      <motion.div 
-        className="about-scroll-progress-bar"
-        style={{ scaleX: smoothProgress }}
-        aria-hidden="true"
-      />
-
+    <div className="inner-page about-page minimal-about">
       {/* ══════════════════════════════════════════════════════════════════════
           1. HERO (LIGHT / WHITE) — Minimalist Editorial Typography with Spring Parallax
       ══════════════════════════════════════════════════════════════════════ */}
