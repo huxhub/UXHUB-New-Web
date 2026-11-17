@@ -1,14 +1,31 @@
 "use client";
 import { useState } from "react";
+import { submitFormEmail } from "./SharedUI";
 
 const empty = { name: "", company: "", email: "", phone: "", location: "", scope: "", brief: "" };
 
 export default function ContactEnquiryForm() {
   const [data, setData] = useState(empty);
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
   const update = (event) => setData((current) => ({ ...current, [event.target.name]: event.target.value }));
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setSubmitting(true);
+    await submitFormEmail({
+      formType: "Enquiry Form",
+      subject: `[Enquiry] ${data.name} - ${data.company || 'Quick Inquiry'}`,
+      data
+    });
+    setSubmitting(false);
+    setSent(true);
+  };
+
   if (sent) return <div className="contact-enquiry-success" role="status"><strong>Enquiry received.</strong><span>Thank you. The UX Hub team will get back to you shortly.</span><button type="button" className="contact-enquiry-reset" onClick={() => setSent(false)}>Send another enquiry</button></div>;
-  return <form className="contact-enquiry-form" onSubmit={(event) => { event.preventDefault(); setSent(true); }}>
+
+  return <form className="contact-enquiry-form" onSubmit={handleSubmit}>
     <div className="contact-enquiry-grid">
       <label>Name<input name="name" value={data.name} onChange={update} placeholder="Your full name" required /></label>
       <label>Company<input name="company" value={data.company} onChange={update} placeholder="Company or organization" required /></label>
@@ -34,6 +51,6 @@ export default function ContactEnquiryForm() {
     </label>
     <label>Project Brief<textarea name="brief" value={data.brief} onChange={update} placeholder="Share the opportunity, challenge, timeline or growth targets." rows="4" required /></label>
     <p className="contact-enquiry-note">Data transmission secured. No client data is shared with external parties.</p>
-    <button type="submit" className="wipe-button-module__-tlSna__root disclosure-list-module__SPVnsG__link contact-enquiry-submit"><span className="wipe-button-module__-tlSna__content"><span className="text-module__DYGPWq__root text-module__DYGPWq__body-large text-module__DYGPWq__weight-medium">Transmit Enquiry</span><span aria-hidden="true">↗</span></span></button>
+    <button type="submit" disabled={submitting} className="wipe-button-module__-tlSna__root disclosure-list-module__SPVnsG__link contact-enquiry-submit"><span className="wipe-button-module__-tlSna__content"><span className="text-module__DYGPWq__root text-module__DYGPWq__body-large text-module__DYGPWq__weight-medium">{submitting ? 'Transmitting...' : 'Transmit Enquiry'}</span><span aria-hidden="true">↗</span></span></button>
   </form>;
 }

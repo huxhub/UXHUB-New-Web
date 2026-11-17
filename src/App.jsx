@@ -8,30 +8,57 @@ import './App.css';
 import { 
   UXHubLogo, 
   BrandCross, 
-  ContactModal 
+  ContactModal,
+  DiagonalArrowIcon 
 } from './components/SharedUI';
 
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
-import ProductPage from './pages/ProductPage';
+import PriceIntelligencePage from './pages/PriceIntelligencePage';
+import AiVisibilityPage from './pages/AiVisibilityPage';
 import AboutPage from './pages/AboutPage';
 import StoriesPage from './pages/StoriesPage';
 import ContactPage from './pages/ContactPage';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── Global Nav Destinations ────────────────────────────────────────────────
+// ─── Global Nav Destinations with Dropdown ──────────────────────────────────
 export const NAV_LINKS = [
   { id: 'home', label: 'Home', path: '#/' },
   { id: 'services', label: 'Services', path: '#/services' },
-  { id: 'product', label: 'Product', path: '#/product' },
+  { 
+    id: 'product', 
+    label: 'Products', 
+    path: '#/price-intelligence',
+    hasDropdown: true,
+    children: [
+      { 
+        id: 'price-intelligence', 
+        label: 'Price Intelligence', 
+        tagline: 'Real-Time Competitor Price Tracking & Dynamic Repricing',
+        path: '#/price-intelligence' 
+      },
+      { 
+        id: 'ai-visibility', 
+        label: 'AI Visibility Intelligence', 
+        tagline: 'Track & Improve Visibility in ChatGPT, Gemini & Perplexity',
+        path: '#/ai-visibility' 
+      }
+    ]
+  },
   { id: 'about', label: 'About', path: '#/about' },
   { id: 'contact', label: 'Contact', path: '#/contact' }
 ];
 
 export const resolvePageFromHash = (hash) => {
   const clean = (hash || '').replace(/^#\/?/, '').toLowerCase().trim();
-  if (['services', 'product', 'about', 'contact'].includes(clean)) {
+  if (clean === 'ai-visibility' || clean === 'aivisibility' || clean === 'ai-visibility.html') {
+    return 'ai-visibility';
+  }
+  if (['price-intelligence', 'pricing-intelligence', 'pricing_intelligence', 'pricing', 'product'].includes(clean)) {
+    return 'price-intelligence';
+  }
+  if (['services', 'about', 'contact', 'stories'].includes(clean)) {
     return clean;
   }
   if (clean === 'about-us' || clean === 'aboutus') {
@@ -40,14 +67,13 @@ export const resolvePageFromHash = (hash) => {
   if (clean === 'capabilities') {
     return 'services';
   }
-  if (clean === 'price-intelligence' || clean === 'pricing') {
-    return 'product';
-  }
   return 'home';
 };
 
-// ─── Menu Drawer ────────────────────────────────────────────────────────────
+// ─── Menu Drawer with Dropdown Accordion ────────────────────────────────────
 function MenuDrawer({ isOpen, onClose, onNavigate, currentPage }) {
+  const [productExpanded, setProductExpanded] = useState(true);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -71,23 +97,82 @@ function MenuDrawer({ isOpen, onClose, onNavigate, currentPage }) {
             </button>
             <nav>
               <ul className="menu-primary">
-                {NAV_LINKS.map((item) => (
-                  <li key={item.id}>
-                    <a 
-                      href={item.path}
-                      className={currentPage === item.id ? 'active-menu-link' : ''}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onNavigate(item.id);
-                        onClose();
-                      }}
-                    >
-                      <span>{item.label}</span>
-                      {currentPage === item.id && <span className="menu-active-pill">Current</span>}
-                    </a>
-                  </li>
-                ))}
+                {NAV_LINKS.map((item) => {
+                  if (item.hasDropdown) {
+                    const isAnyChildActive = item.children.some(c => c.id === currentPage) || currentPage === 'product';
+                    return (
+                      <li key={item.id} className="menu-item-with-dropdown">
+                        <div className="menu-dropdown-trigger-row">
+                          <a 
+                            href={item.path}
+                            className={isAnyChildActive ? 'active-menu-link' : ''}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setProductExpanded(!productExpanded);
+                            }}
+                          >
+                            <span>{item.label}</span>
+                          </a>
+                          <button 
+                            type="button" 
+                            className={`menu-dropdown-toggle ${productExpanded ? 'open' : ''}`}
+                            onClick={() => setProductExpanded(!productExpanded)}
+                            aria-label="Toggle products menu"
+                          >
+                            ▾
+                          </button>
+                        </div>
+
+                        {/* Dropdown Items List - Only item names */}
+                        <AnimatePresence initial={false}>
+                          {productExpanded && (
+                            <motion.ul 
+                              className="menu-submenu"
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                            >
+                              {item.children.map((child) => (
+                                <li key={child.id} className="menu-submenu-item">
+                                  <a 
+                                    href={child.path}
+                                    className={currentPage === child.id ? 'active-sub-link' : ''}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      onNavigate(child.id);
+                                      onClose();
+                                    }}
+                                  >
+                                    <span>{child.label}</span>
+                                  </a>
+                                </li>
+                              ))}
+                            </motion.ul>
+                          )}
+                        </AnimatePresence>
+                      </li>
+                    );
+                  }
+
+                  return (
+                    <li key={item.id}>
+                      <a 
+                        href={item.path}
+                        className={currentPage === item.id ? 'active-menu-link' : ''}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onNavigate(item.id);
+                          onClose();
+                        }}
+                      >
+                        <span>{item.label}</span>
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
+
               <div className="menu-secondary">
                 <span className="menu-sec-label">DIGITAL BUSINESS GROWTH CONSULTANCY</span>
                 <p className="menu-sec-meta">India ↔ KSA · Strategy, technology and growth connected.</p>
@@ -109,8 +194,8 @@ function MenuDrawer({ isOpen, onClose, onNavigate, currentPage }) {
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Router state synchronized with hash: home, services, capabilities, stories, contact
   const [currentPage, setCurrentPage] = useState(() => {
     if (typeof window !== 'undefined') {
       return resolvePageFromHash(window.location.hash);
@@ -130,6 +215,17 @@ export default function App() {
     setMenuOpen(false);
   };
 
+  // Sticky scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.__lenis ? window.__lenis.scroll : window.scrollY;
+      setIsScrolled(scrollPos > 15);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   useEffect(() => {
     const handleHashChange = () => {
       const resolved = resolvePageFromHash(window.location.hash);
@@ -147,7 +243,7 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Initialize Lenis smooth scroll once on mount
+  // Initialize Lenis smooth scroll
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.25,
@@ -162,7 +258,10 @@ export default function App() {
 
     window.__lenis = lenis;
 
-    lenis.on('scroll', ScrollTrigger.update);
+    lenis.on('scroll', (e) => {
+      ScrollTrigger.update();
+      setIsScrolled(e.scroll > 15);
+    });
 
     const updateTicker = (time) => {
       lenis.raf(time * 1000);
@@ -182,15 +281,13 @@ export default function App() {
     };
   }, []);
 
-  // Per-page change updates: anchor clicks, scroll reveal observer & ScrollTrigger sync
+  // Per-page change updates & anchor interception
   useEffect(() => {
-    // Scroll to top immediately on page change
     if (window.__lenis) {
       window.__lenis.scrollTo(0, { immediate: true });
     }
     window.scrollTo({ top: 0, behavior: 'instant' });
 
-    // Global interception for smooth gliding or cross-page anchor routing
     const handleAnchorClick = (e) => {
       const anchor = e.target.closest('a[href^="#"]');
       if (!anchor) return;
@@ -204,9 +301,18 @@ export default function App() {
         return;
       }
 
-      // Local hash like #services, #product, #about, #contact
       const clean = href.replace(/^#/, '').toLowerCase();
-      if (['services', 'product', 'about', 'contact', 'home'].includes(clean)) {
+      if (clean === 'ai-visibility' || clean === 'aivisibility' || clean === 'ai-visibility.html') {
+        e.preventDefault();
+        navigate('ai-visibility');
+        return;
+      }
+      if (['price-intelligence', 'pricing-intelligence', 'pricing', 'product'].includes(clean)) {
+        e.preventDefault();
+        navigate('price-intelligence');
+        return;
+      }
+      if (['services', 'about', 'contact', 'home'].includes(clean)) {
         e.preventDefault();
         navigate(clean);
         return;
@@ -222,7 +328,6 @@ export default function App() {
         return;
       }
 
-      // Intra-page section anchors like #partners, #philosophy, #hero
       if (currentPage !== 'home') {
         e.preventDefault();
         navigate('home');
@@ -243,7 +348,6 @@ export default function App() {
     };
     document.addEventListener('click', handleAnchorClick);
 
-    // Scroll reveal observer
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -259,7 +363,6 @@ export default function App() {
     const revealElements = document.querySelectorAll('.observe-reveal');
     revealElements.forEach((el) => observer.observe(el));
 
-    // Refresh ScrollTrigger to synchronize triggers with page layout & Lenis
     const t1 = setTimeout(() => ScrollTrigger.refresh(), 80);
     const t2 = setTimeout(() => ScrollTrigger.refresh(), 250);
 
@@ -282,8 +385,10 @@ export default function App() {
     }
   }, [menuOpen, contactOpen]);
 
+  const isDarkThemePage = ['price-intelligence', 'ai-visibility', 'product', 'services', 'stories', 'contact'].includes(currentPage);
+
   return (
-    <div className={`app-root page-${currentPage}`}>
+    <div className={`app-root page-${currentPage} ${isScrolled ? 'has-scrolled' : ''}`}>
       {/* ─── Overlays ──────────────────────────────────────────────────────── */}
       <MenuDrawer 
         isOpen={menuOpen} 
@@ -297,8 +402,10 @@ export default function App() {
         onClose={() => setContactOpen(false)} 
       />
 
-      {/* ─── Global Header ─────────────────────────────────────────────────── */}
-      <header className={`site-header ${currentPage !== 'home' && currentPage !== 'about' ? 'site-header--inner' : ''}`}>
+      {/* ─── Sticky Global Header Bar (Logo & Menu Trigger Only) ─────────────── */}
+      <header 
+        className={`site-header ${isScrolled ? 'site-header--scrolled' : ''} ${isDarkThemePage ? 'site-header--dark' : ''}`}
+      >
         <div className="header-inner">
           <UXHubLogo onClick={() => navigate('home')} />
 
@@ -312,7 +419,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* ─── Active Page Content ───────────────────────────────────────────── */}
+      {/* ─── Active Page Content Flow ──────────────────────────────────────── */}
       <main className="main-content-flow">
         {currentPage === 'home' && (
           <HomePage 
@@ -326,8 +433,14 @@ export default function App() {
             onNavigate={navigate} 
           />
         )}
-        {currentPage === 'product' && (
-          <ProductPage 
+        {(currentPage === 'price-intelligence' || currentPage === 'product') && (
+          <PriceIntelligencePage 
+            onOpenContact={() => navigate('contact')} 
+            onNavigate={navigate} 
+          />
+        )}
+        {currentPage === 'ai-visibility' && (
+          <AiVisibilityPage 
             onOpenContact={() => navigate('contact')} 
             onNavigate={navigate} 
           />
@@ -351,7 +464,7 @@ export default function App() {
         )}
       </main>
 
-      {/* ─── Global Footer (Plain Solid Black) ─────────────────────────────── */}
+      {/* ─── Global Footer ─────────────────────────────────────────────────── */}
       <footer id="footer" className="footer">
         <div className="container">
           <div className="footer-brand-wrap">
@@ -382,11 +495,20 @@ export default function App() {
               </li>
               <li>
                 <a 
-                  href="#/product" 
-                  className={`footer-nav-item-btn ${currentPage === 'product' ? 'active-footer-link' : ''}`} 
-                  onClick={(e) => { e.preventDefault(); navigate('product'); }}
+                  href="#/price-intelligence" 
+                  className={`footer-nav-item-btn ${currentPage === 'price-intelligence' || currentPage === 'product' ? 'active-footer-link' : ''}`} 
+                  onClick={(e) => { e.preventDefault(); navigate('price-intelligence'); }}
                 >
-                  Product
+                  Price Intelligence
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#/ai-visibility" 
+                  className={`footer-nav-item-btn ${currentPage === 'ai-visibility' ? 'active-footer-link' : ''}`} 
+                  onClick={(e) => { e.preventDefault(); navigate('ai-visibility'); }}
+                >
+                  AI Visibility
                 </a>
               </li>
               <li>
@@ -401,7 +523,7 @@ export default function App() {
               <li>
                 <a 
                   href="#/contact" 
-                  className={`footer-nav-item-btn footer-nav-item-btn--contact ${currentPage === 'contact' ? 'active-footer-link' : ''}`} 
+                  className={`footer-nav-item-btn ${currentPage === 'contact' ? 'active-footer-link' : ''}`} 
                   onClick={(e) => { e.preventDefault(); navigate('contact'); }}
                 >
                   Contact
@@ -410,21 +532,33 @@ export default function App() {
             </ul>
           </nav>
 
-          <div className="footer-contact-details">
-            <p className="footer-address">
-              UXHUB, ADM 07, First Floor, Administrative building KINFRA Defence Park, Palakkad, Ottapalam 679 301
-            </p>
-            <p className="footer-meta-links">
-              <a href="mailto:hello@uxhub.in" className="footer-contact-link">hello@uxhub.in</a>
-              <span className="footer-meta-divider">&nbsp;&nbsp;&nbsp;</span>
-              <a href="tel:+919745580881" className="footer-contact-link">+91 9745580881</a>
-            </p>
-          </div>
-
-          <div className="footer-bottom">
-            <p className="footer-copyright">
-              © 2026 uxhubglobal.com
-            </p>
+          <div className="footer-bottom-grid">
+            <div className="footer-col footer-col-office">
+              <span className="footer-col-title">OFFICES</span>
+              <p className="footer-address">
+                Bangalore, India<br />
+                Riyadh, Saudi Arabia
+              </p>
+            </div>
+            <div className="footer-col footer-col-legal">
+              <span className="footer-col-title">UX HUB GLOBAL</span>
+              <p className="footer-copyright">
+                © {new Date().getFullYear()} UX HUB. ALL RIGHTS RESERVED.
+              </p>
+            </div>
+            <div className="footer-col footer-col-action">
+              <a 
+                href="#/contact"
+                className="footer-consult-btn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('contact');
+                }}
+              >
+                <span>Book Consultation</span>
+                <span className="footer-btn-arrow">→</span>
+              </a>
+            </div>
           </div>
         </div>
       </footer>

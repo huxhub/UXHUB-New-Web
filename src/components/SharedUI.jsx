@@ -300,13 +300,94 @@ export const featuredStories = [
   }
 ];
 
+// ─── Form Email Submission Helper (SMTP with Mailto Fallback) ───────────────
+export async function submitFormEmail({ formType = 'Website Inquiry', data = {}, subject }) {
+  const recipient = 'uxhub09@gmail.com';
+  const defaultSubject = `[UX Hub Lead] ${formType} from ${data.name || data.email || 'Visitor'}`;
+  const finalSubject = subject || defaultSubject;
+
+  const lines = [
+    `NEW FORM SUBMISSION: ${formType.toUpperCase()}`,
+    `========================================`,
+    `Submitted at: ${new Date().toLocaleString()}`,
+    `Source: ${typeof window !== 'undefined' ? window.location.href : 'UX Hub Web'}`,
+    '',
+    `DETAILS:`,
+    `----------------------------------------`
+  ];
+
+  for (const [key, value] of Object.entries(data)) {
+    if (value !== undefined && value !== null && value !== '') {
+      const formattedKey = key
+        .replace(/([A-Z])/g, ' $1')
+        .replace(/_/g, ' ')
+        .toUpperCase();
+      lines.push(`${formattedKey}: ${Array.isArray(value) ? value.join(', ') : value}`);
+    }
+  }
+
+  const emailText = lines.join('\n');
+
+  // 1. Try sending via backend SMTP API (uxhub09@gmail.com)
+  try {
+    const res = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        to: recipient,
+        replyTo: data.email || undefined,
+        subject: finalSubject,
+        text: emailText,
+        formData: data,
+        formType
+      })
+    });
+
+    if (res.ok) {
+      return { success: true, mode: 'smtp' };
+    }
+  } catch (err) {
+    console.warn('SMTP API unavailable, falling back to mailto:', err);
+  }
+
+  // 2. Fallback: mailto link if API endpoint is not active/available
+  try {
+    const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(finalSubject)}&body=${encodeURIComponent(emailText)}`;
+    const link = document.createElement('a');
+    link.href = mailtoUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    return { success: true, mode: 'mailto' };
+  } catch (e) {
+    console.error('Mailto fallback error:', e);
+  }
+
+  return { success: true };
+}
+
 // ─── Contact Modal ──────────────────────────────────────────────────────────
 export function ContactModal({ isOpen, onClose }) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
+    await submitFormEmail({
+      formType: 'Modal Inquiry',
+      subject: `[Contact Modal] ${formData.name} - ${formData.company || 'Quick Inquiry'}`,
+      data: {
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        message: formData.message
+      }
+    });
+    setSubmitting(false);
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
@@ -389,8 +470,8 @@ export function ContactModal({ isOpen, onClose }) {
                     onChange={e => setFormData({ ...formData, message: e.target.value })}
                   />
                 </div>
-                <button type="submit" className="modal-submit-btn">
-                  Send Message
+                <button type="submit" className="modal-submit-btn" disabled={submitting}>
+                  {submitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             )}

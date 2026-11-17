@@ -367,7 +367,6 @@ export default function StoriesPage({ onOpenContact, onNavigate }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.6, delay: idx * 0.08, ease: springEase }}
-                  whileHover={{ y: -6 }}
                   onClick={() => scrollToSpotlight(story.id)}
                 >
                   <div className="story-box-icon-box">

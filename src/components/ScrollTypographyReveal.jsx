@@ -51,6 +51,10 @@ export default function ScrollTypographyReveal({
     const el = containerRef.current;
     if (!el) return;
 
+    // The scroll-fill treatment is intentionally reserved for Home section 2.
+    // All other instances stay as regular, immediately readable text.
+    if (!el.closest('#statement-1')) return;
+
     const words = el.querySelectorAll('.typography-reveal-word');
     if (!words.length) return;
 

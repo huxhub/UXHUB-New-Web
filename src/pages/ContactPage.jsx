@@ -4,7 +4,8 @@ import {
   BrandCross, 
   DiagonalArrowIcon,
   MailIcon,
-  PhoneIcon
+  PhoneIcon,
+  submitFormEmail
 } from '../components/SharedUI';
 import Effects from '../components/Effects';
 import ScrollTypographyReveal from '../components/ScrollTypographyReveal';
@@ -13,6 +14,7 @@ const springEase = [0.16, 1, 0.3, 1];
 
 export default function ContactPage({ onNavigate }) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -34,8 +36,24 @@ export default function ContactPage({ onNavigate }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
+    await submitFormEmail({
+      formType: 'Contact Inquiry',
+      subject: `[Contact Form] ${formData.name} - ${formData.company || 'Direct Inquiry'}`,
+      data: {
+        name: formData.name,
+        company: formData.company,
+        email: formData.email,
+        phone: formData.phone,
+        country: formData.country,
+        scope: formData.scope,
+        services: selectedServices.join(', '),
+        message: formData.message
+      }
+    });
+    setSubmitting(false);
     setSubmitted(true);
   };
 
@@ -339,8 +357,8 @@ export default function ContactPage({ onNavigate }) {
                     </div>
 
                     {/* Submit Action */}
-                    <button type="submit" className="minimal-submit-btn">
-                      <span>Submit Inquiry</span>
+                    <button type="submit" className="minimal-submit-btn" disabled={submitting}>
+                      <span>{submitting ? 'Transmitting...' : 'Submit Inquiry'}</span>
                       <span className="submit-arrow-circle">
                         <DiagonalArrowIcon size={14} color="currentColor" />
                       </span>

@@ -184,7 +184,6 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.65, delay: idx * 0.1, ease: springEase }}
-                  whileHover={{ y: -8 }}
                   onClick={() => onNavigate('contact')}
                 >
                   <div className="service-black-card-icon-box">
@@ -277,7 +276,6 @@ export default function ServicesPage({ onOpenContact, onNavigate }) {
                         <div 
                           key={item.id} 
                           className={`practice-matrix-item ${isActive ? 'is-active' : ''}`}
-                          onMouseEnter={() => setActivePracticeItem(item.id)}
                         >
                           <span className="practice-item-num">{item.id}</span>
                           <span className="practice-item-title">{item.title}</span>

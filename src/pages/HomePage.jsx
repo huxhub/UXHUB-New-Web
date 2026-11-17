@@ -20,8 +20,11 @@ import {
 
 export default function HomePage({ onOpenContact, onNavigate }) {
   const [partnerIndex, setPartnerIndex] = useState(0);
+  const [isPartnerAnimating, setIsPartnerAnimating] = useState(false);
   const [storyIndex, setStoryIndex] = useState(0);
   const [storyDirection, setStoryDirection] = useState(1);
+  const [partnersVisible, setPartnersVisible] = useState(false);
+  const [partnersIntroComplete, setPartnersIntroComplete] = useState(false);
   const [isResponsive, setIsResponsive] = useState(
     typeof window !== 'undefined' ? window.innerWidth <= 1200 : false
   );
@@ -34,6 +37,18 @@ export default function HomePage({ onOpenContact, onNavigate }) {
     setIsResponsive(mql.matches);
     mql.addEventListener('change', handleMqlChange);
     return () => mql.removeEventListener('change', handleMqlChange);
+  }, []);
+
+  useEffect(() => {
+    const section = document.getElementById('partners');
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setPartnersVisible(entry.isIntersecting),
+      { threshold: 0.2 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
   const handlePrevStory = () => {
@@ -133,7 +148,7 @@ export default function HomePage({ onOpenContact, onNavigate }) {
               theme="dark"
               start="top 85%"
               end="bottom 45%"
-              scrub={0.8}
+              scrub={true}
             />
             <ScrollTypographyReveal
               text="From strategy to execution, we combine deep expertise with hands-on delivery to create digital products and businesses that are built to scale."
@@ -147,68 +162,84 @@ export default function HomePage({ onOpenContact, onNavigate }) {
               stagger={0.035}
               start="top 90%"
               end="bottom 50%"
-              scrub={0.8}
+              scrub={true}
             />
           </div>
         </section>
 
         {/* ─── SECTION 3: PARTNERS (WHITE BACKGROUND WITH COPIED SWIRL ANIMATION) ─ */}
         <section id="partners" className="partners-section">
-          <div className="partners-animation-layer" aria-hidden="true">
-            <Effects kind="swirl" className="metallic-swirl-canvas partners-swirl-canvas" />
-          </div>
           <div className="container relative-z observe-reveal">
             <div className="partners-header">
-              <ScrollTypographyReveal
-                lines={[
-                  "Built for businesses that want",
-                  "to scale digitally"
-                ]}
-                tag="h2"
-                className="section-title"
-                theme="light"
-                start="top 85%"
-                end="bottom 45%"
-                scrub={0.8}
-              />
+              <motion.h2
+                className="section-title partners-reveal-title"
+                initial={{ opacity: 0, y: 44 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ duration: 1.05, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              >
+                Built for businesses that want<br />
+                to scale digitally
+              </motion.h2>
             </div>
 
             <div className="carousel-container">
               <button 
                 className="nav-arrow-btn" 
-                onClick={() => setPartnerIndex(p => Math.max(0, p - 1))}
-                disabled={partnerIndex === 0}
+                onClick={() => {
+                  if (isPartnerAnimating) return;
+                  setIsPartnerAnimating(true);
+                  setPartnerIndex(p => Math.max(0, p - 1));
+                }}
+                disabled={partnerIndex === 0 || isPartnerAnimating}
                 aria-label="Previous partner logos"
               >
                 <VectorArrowLeft width={20} height={18} />
               </button>
 
               <div className="partners-track">
-                <AnimatePresence mode="wait">
-                  <motion.div 
-                    key={partnerIndex}
-                    className="partners-slide-row"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                <motion.div
+                  className="partners-reel-entrance"
+                  initial={{ x: '100vw' }}
+                  animate={{ x: partnersVisible ? 0 : '100vw' }}
+                  transition={{
+                    duration: partnersIntroComplete ? 0 : 1.35,
+                    delay: partnersIntroComplete ? 0 : 0.55,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  onAnimationComplete={() => {
+                    if (partnersVisible) setPartnersIntroComplete(true);
+                  }}
+                >
+                  <div
+                    className="partners-reel"
+                    style={{ transform: `translate3d(${partnerIndex * -50}%, 0, 0)` }}
+                    onTransitionEnd={(event) => {
+                      if (event.propertyName === 'transform') setIsPartnerAnimating(false);
+                    }}
                   >
-                    {partnerSets[partnerIndex].map((item, idx) => (
-                      <div key={idx} className="partner-logo-item">
-                        <div className="partner-logo-symbol">
-                          {item.icon}
-                        </div>
-                        <span className="partner-logo-name">{item.name}</span>
+                    {partnerSets.map((set, setIndex) => (
+                      <div className="partners-slide-row" key={setIndex}>
+                        {set.map((item) => (
+                          <div key={item.name} className="partner-logo-item">
+                            <div className="partner-logo-symbol">{item.icon}</div>
+                            <span className="partner-logo-name">{item.name}</span>
+                          </div>
+                        ))}
                       </div>
                     ))}
-                  </motion.div>
-                </AnimatePresence>
+                  </div>
+                </motion.div>
               </div>
 
               <button 
                 className="nav-arrow-btn" 
-                onClick={() => setPartnerIndex(p => Math.min(partnerSets.length - 1, p + 1))}
-                disabled={partnerIndex === partnerSets.length - 1}
+                onClick={() => {
+                  if (isPartnerAnimating) return;
+                  setIsPartnerAnimating(true);
+                  setPartnerIndex(p => Math.min(partnerSets.length - 1, p + 1));
+                }}
+                disabled={partnerIndex === partnerSets.length - 1 || isPartnerAnimating}
                 aria-label="Next partner logos"
               >
                 <VectorArrowRight width={20} height={18} />
@@ -304,7 +335,6 @@ export default function HomePage({ onOpenContact, onNavigate }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -8 }}
               onClick={() => onNavigate('services')}
             >
               <div className="service-icon-box">
@@ -325,7 +355,6 @@ export default function HomePage({ onOpenContact, onNavigate }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -8 }}
               onClick={() => onNavigate('services')}
             >
               <div className="service-icon-box">
@@ -346,7 +375,6 @@ export default function HomePage({ onOpenContact, onNavigate }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -8 }}
               onClick={() => onNavigate('services')}
             >
               <div className="service-icon-box">

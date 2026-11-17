@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { submitFormEmail } from "./SharedUI";
 
 const initial = {
   name: "",
@@ -44,13 +44,11 @@ export default function TrialRegistration() {
     setStatus("sending");
     setMessage("");
     try {
-      const response = await fetch("/api/trial-registration", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      await submitFormEmail({
+        formType: "14-Day Free Trial Registration",
+        subject: `[Trial Registration] ${data.name} - ${data.company || 'E-commerce Store'}`,
+        data
       });
-      const result = await response.json();
-      if (!response.ok || !result.success) throw new Error(result.message);
       setStatus("sent");
       setStep(3);
     } catch (error) {
