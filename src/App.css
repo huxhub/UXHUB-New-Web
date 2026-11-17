@@ -9250,8 +9250,6 @@ html:has(.page-capabilities) { scroll-behavior: smooth; }
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-}
-  }
 
   .pi-engine-display-card {
     min-height: auto;
