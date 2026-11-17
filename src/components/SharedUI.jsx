@@ -300,7 +300,7 @@ export const featuredStories = [
   }
 ];
 
-// ─── Form Email Submission Helper (SMTP with Mailto Fallback) ───────────────
+// ─── Form Email Submission Helper (Multi-Tier Production Architecture) ───────
 export async function submitFormEmail({ formType = 'Website Inquiry', data = {}, subject }) {
   const recipient = 'uxhub09@gmail.com';
   const defaultSubject = `[UX Hub Lead] ${formType} from ${data.name || data.email || 'Visitor'}`;
@@ -327,30 +327,73 @@ export async function submitFormEmail({ formType = 'Website Inquiry', data = {},
   }
 
   const emailText = lines.join('\n');
+  const payload = {
+    to: recipient,
+    replyTo: data.email || undefined,
+    subject: finalSubject,
+    text: emailText,
+    formData: data,
+    formType
+  };
 
-  // 1. Try sending via backend SMTP API (uxhub09@gmail.com)
+  // 1. Primary: Backend endpoint (Vercel Serverless Function & Vite dev server)
   try {
     const res = await fetch('/api/send-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        to: recipient,
-        replyTo: data.email || undefined,
-        subject: finalSubject,
-        text: emailText,
-        formData: data,
-        formType
-      })
+      body: JSON.stringify(payload)
     });
 
     if (res.ok) {
-      return { success: true, mode: 'smtp' };
+      return { success: true, mode: 'api-primary' };
     }
   } catch (err) {
-    console.warn('SMTP API unavailable, falling back to mailto:', err);
+    console.warn('Primary /api/send-email endpoint not reachable:', err);
   }
 
-  // 2. Fallback: mailto link if API endpoint is not active/available
+  // 2. Secondary: Direct PHP endpoint (Hostinger, Apache, cPanel web hosting)
+  try {
+    const resPhp = await fetch('/api/send-email.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (resPhp.ok) {
+      return { success: true, mode: 'api-php' };
+    }
+  } catch (err) {
+    console.warn('PHP /api/send-email.php endpoint not reachable:', err);
+  }
+
+  // 3. Tertiary: Direct HTTPS Form Relay (Works anywhere with zero server requirement)
+  try {
+    const formSubmitRes = await fetch(`https://formsubmit.co/ajax/${recipient}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        _subject: finalSubject,
+        _replyto: data.email || undefined,
+        _template: 'table',
+        _captcha: 'false',
+        form_type: formType,
+        ...data,
+        source_url: typeof window !== 'undefined' ? window.location.href : 'UX Hub Web',
+        timestamp: new Date().toISOString()
+      })
+    });
+
+    if (formSubmitRes.ok) {
+      return { success: true, mode: 'formsubmit-relay' };
+    }
+  } catch (err) {
+    console.warn('FormSubmit relay unavailable:', err);
+  }
+
+  // 4. Last resort: mailto link
   try {
     const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(finalSubject)}&body=${encodeURIComponent(emailText)}`;
     const link = document.createElement('a');

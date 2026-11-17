@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Rewrite /api/send-email to /api/send-email.php
+  RewriteRule ^api/send-email/?$ api/send-email.php [L,QSA]
+
+  # Don't rewrite real existing files or directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Route everything else to index.html for Single Page App
+  RewriteRule ^ index.html [L]
+</IfModule>
