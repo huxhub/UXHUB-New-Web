@@ -21,7 +21,10 @@ const footerNavigation = [
   ["India ↔ KSA", "/markets"],
 ];
 
-const productChildren = [["Price Intelligence", "/product/price-intelligence"]];
+const productChildren = [
+  ["Price Intelligence", "/products/price-intelligence"],
+  ["AI Visibility Intelligence", "/products/ai-visibility"]
+];
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(null);

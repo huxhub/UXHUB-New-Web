@@ -29,20 +29,20 @@ export const NAV_LINKS = [
   { 
     id: 'product', 
     label: 'Products', 
-    path: '#/price-intelligence',
+    path: '#/products/price-intelligence',
     hasDropdown: true,
     children: [
       { 
         id: 'price-intelligence', 
         label: 'Price Intelligence', 
         tagline: 'Real-Time Competitor Price Tracking & Dynamic Repricing',
-        path: '#/price-intelligence' 
+        path: '#/products/price-intelligence' 
       },
       { 
         id: 'ai-visibility', 
         label: 'AI Visibility Intelligence', 
         tagline: 'Track & Improve Visibility in ChatGPT, Gemini & Perplexity',
-        path: '#/ai-visibility' 
+        path: '#/products/ai-visibility' 
       }
     ]
   },
@@ -50,12 +50,31 @@ export const NAV_LINKS = [
   { id: 'contact', label: 'Contact', path: '#/contact' }
 ];
 
-export const resolvePageFromHash = (hash) => {
-  const clean = (hash || '').replace(/^#\/?/, '').toLowerCase().trim();
-  if (clean === 'ai-visibility' || clean === 'aivisibility' || clean === 'ai-visibility.html') {
+export const resolvePageFromHash = (hashOrPath) => {
+  const clean = (hashOrPath || '')
+    .replace(/^[#/]+/, '')
+    .replace(/[?#].*$/, '')
+    .toLowerCase()
+    .trim();
+
+  if (
+    clean.includes('ai-visibility') || 
+    clean.includes('aivisibility')
+  ) {
     return 'ai-visibility';
   }
-  if (['price-intelligence', 'pricing-intelligence', 'pricing_intelligence', 'pricing', 'product'].includes(clean)) {
+  if (
+    clean.includes('price-intelligence') ||
+    clean.includes('priceintelligence') ||
+    clean.includes('pricetelligent') ||
+    clean.includes('pricing-intelligence') ||
+    clean.includes('pricing_intelligence') ||
+    clean.includes('pricing') ||
+    clean === 'product' ||
+    clean === 'products' ||
+    clean.startsWith('products/') ||
+    clean.startsWith('product/')
+  ) {
     return 'price-intelligence';
   }
   if (['services', 'about', 'contact', 'stories'].includes(clean)) {
@@ -198,15 +217,30 @@ export default function App() {
 
   const [currentPage, setCurrentPage] = useState(() => {
     if (typeof window !== 'undefined') {
-      return resolvePageFromHash(window.location.hash);
+      const fromHash = resolvePageFromHash(window.location.hash);
+      if (fromHash !== 'home') return fromHash;
+      const fromPath = resolvePageFromHash(window.location.pathname);
+      if (fromPath !== 'home') return fromPath;
     }
     return 'home';
   });
 
+  const getHashForPage = (pageId) => {
+    if (pageId === 'home') return '';
+    if (pageId === 'price-intelligence' || pageId === 'product') {
+      return '#/products/price-intelligence';
+    }
+    if (pageId === 'ai-visibility') {
+      return '#/products/ai-visibility';
+    }
+    return `#/${pageId}`;
+  };
+
   const navigate = (pageId) => {
     setCurrentPage(pageId);
     if (typeof window !== 'undefined') {
-      window.location.hash = pageId === 'home' ? '' : `#/${pageId}`;
+      const targetHash = getHashForPage(pageId);
+      window.location.hash = targetHash;
       window.scrollTo({ top: 0, behavior: 'instant' });
       if (window.__lenis) {
         window.__lenis.scrollTo(0, { immediate: true });
@@ -227,8 +261,10 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const resolved = resolvePageFromHash(window.location.hash);
+    const handleRouteSync = () => {
+      const fromHash = resolvePageFromHash(window.location.hash);
+      const fromPath = resolvePageFromHash(window.location.pathname);
+      const resolved = fromHash !== 'home' ? fromHash : fromPath;
       setCurrentPage(resolved);
       window.scrollTo({ top: 0, behavior: 'instant' });
       if (window.__lenis) {
@@ -239,8 +275,12 @@ export default function App() {
       }, 100);
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', handleRouteSync);
+    window.addEventListener('popstate', handleRouteSync);
+    return () => {
+      window.removeEventListener('hashchange', handleRouteSync);
+      window.removeEventListener('popstate', handleRouteSync);
+    };
   }, []);
 
   // Initialize Lenis smooth scroll
@@ -289,12 +329,22 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'instant' });
 
     const handleAnchorClick = (e) => {
-      const anchor = e.target.closest('a[href^="#"]');
+      const anchor = e.target.closest('a');
       if (!anchor) return;
       const href = anchor.getAttribute('href');
       if (!href || href === '#' || href === '#/') return;
 
-      if (href.startsWith('#/')) {
+      if (
+        href.startsWith('mailto:') || 
+        href.startsWith('tel:') || 
+        href.startsWith('http://') || 
+        href.startsWith('https://') ||
+        anchor.getAttribute('target') === '_blank'
+      ) {
+        return;
+      }
+
+      if (href.startsWith('#/') || href.startsWith('/')) {
         const dest = resolvePageFromHash(href);
         e.preventDefault();
         navigate(dest);
@@ -302,14 +352,10 @@ export default function App() {
       }
 
       const clean = href.replace(/^#/, '').toLowerCase();
-      if (clean === 'ai-visibility' || clean === 'aivisibility' || clean === 'ai-visibility.html') {
+      const dest = resolvePageFromHash(clean);
+      if (dest !== 'home') {
         e.preventDefault();
-        navigate('ai-visibility');
-        return;
-      }
-      if (['price-intelligence', 'pricing-intelligence', 'pricing', 'product'].includes(clean)) {
-        e.preventDefault();
-        navigate('price-intelligence');
+        navigate(dest);
         return;
       }
       if (['services', 'about', 'contact', 'home'].includes(clean)) {
@@ -495,7 +541,7 @@ export default function App() {
               </li>
               <li>
                 <a 
-                  href="#/price-intelligence" 
+                  href="#/products/price-intelligence" 
                   className={`footer-nav-item-btn ${currentPage === 'price-intelligence' || currentPage === 'product' ? 'active-footer-link' : ''}`} 
                   onClick={(e) => { e.preventDefault(); navigate('price-intelligence'); }}
                 >
@@ -504,7 +550,7 @@ export default function App() {
               </li>
               <li>
                 <a 
-                  href="#/ai-visibility" 
+                  href="#/products/ai-visibility" 
                   className={`footer-nav-item-btn ${currentPage === 'ai-visibility' ? 'active-footer-link' : ''}`} 
                   onClick={(e) => { e.preventDefault(); navigate('ai-visibility'); }}
                 >

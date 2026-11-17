@@ -26,16 +26,6 @@ export default function ContactPage({ onNavigate }) {
     message: ''
   });
 
-  const toggleService = (svc) => {
-    if (selectedServices.includes(svc)) {
-      if (selectedServices.length > 1) {
-        setSelectedServices(selectedServices.filter(s => s !== svc));
-      }
-    } else {
-      setSelectedServices([...selectedServices, svc]);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -49,7 +39,6 @@ export default function ContactPage({ onNavigate }) {
         phone: formData.phone,
         country: formData.country,
         scope: formData.scope,
-        services: selectedServices.join(', '),
         message: formData.message
       }
     });

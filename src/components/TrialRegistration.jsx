@@ -72,7 +72,7 @@ export default function TrialRegistration() {
             <span>02 · Price-change alerts</span>
             <span>03 · Historical pricing analytics</span>
           </div>
-          <Link href="/product/price-intelligence">← Back to Price Intelligence</Link>
+          <Link href="#/products/price-intelligence">← Back to Price Intelligence</Link>
         </section>
 
         <section className="trial-card">
@@ -124,7 +124,7 @@ export default function TrialRegistration() {
               <span>Request transmitted</span>
               <h2>Thank you.</h2>
               <p>Your trial request was sent to the UX Hub team. They will contact you at your business email with the next steps.</p>
-              <Link href="/product/price-intelligence">Return to Price Intelligence →</Link>
+              <Link href="#/products/price-intelligence">Return to Price Intelligence →</Link>
             </div>
           )}
         </section>
