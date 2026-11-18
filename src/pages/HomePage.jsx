@@ -288,21 +288,6 @@ export default function HomePage({ onOpenContact, onNavigate }) {
       <section id="services" className="light-section services-section">
         <div className="container observe-reveal">
           <div className="services-header">
-            <BrandCross size={32} color="#000000" strokeWidth={2} />
-            <ScrollTypographyReveal
-              text="TURNING DIGITAL OPPORTUNITIES INTO SCALABLE BUSINESSES"
-              tag="span"
-              className="services-eyebrow"
-              theme="light"
-              fromColor="#9CA3AF"
-              toColor="#4B5563"
-              fromOpacity={0.4}
-              toOpacity={1}
-              stagger={0.05}
-              start="top 85%"
-              end="bottom 60%"
-              scrub={0.8}
-            />
             <ScrollTypographyReveal
               text="Our Core Growth Services"
               tag="h2"
